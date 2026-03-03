@@ -1,0 +1,30 @@
+import { apiClient } from "@/lib/axios";
+import type { ApiResponse, LoginTokens, SessionUser } from "@/types";
+import type { LoginRequest } from "../types/auth.types";
+
+export const authApi = {
+  login: async (payload: LoginRequest): Promise<LoginTokens> => {
+    const { data } = await apiClient.post<ApiResponse<LoginTokens>>(
+      "/api/auth/login",
+      payload,
+    );
+    if (data.status !== "success" || data.data === null) {
+      throw new Error(data.message ?? "Login failed");
+    }
+    return data.data;
+  },
+
+  session: async (): Promise<SessionUser> => {
+    const { data } = await apiClient.get<ApiResponse<SessionUser>>(
+      "/api/auth/session",
+    );
+    if (data.status !== "success" || data.data === null) {
+      throw new Error("Session fetch failed");
+    }
+    return data.data;
+  },
+
+  logout: async (): Promise<void> => {
+    await apiClient.post("/api/auth/logout");
+  },
+} as const;
