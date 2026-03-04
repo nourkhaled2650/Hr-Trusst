@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { AppUser, PermissionKey, Role } from "@/types";
+import type { PermissionKey, Role, SessionUser } from "@/types";
 import { ROLE_PERMISSIONS } from "@/constants/permissions";
 import type { Permission } from "@/constants/permissions";
 import { UserRole } from "@/types";
@@ -8,7 +8,7 @@ import { UserRole } from "@/types";
 // State shape
 // ---------------------------------------------------------------------------
 interface AuthState {
-  user: AppUser | null;
+  user: SessionUser | null;
   accessToken: string | null;
   refreshToken: string | null;
   /**
@@ -27,7 +27,11 @@ interface AuthActions {
    * Called after a successful login + session fetch.
    * Stores both tokens and the resolved app-level user.
    */
-  setAuth: (user: AppUser, accessToken: string, refreshToken: string) => void;
+  setAuth: (
+    user: SessionUser,
+    accessToken: string,
+    refreshToken: string,
+  ) => void;
 
   /** Wipes all auth state — call on logout or after a failed token refresh. */
   clearAuth: () => void;

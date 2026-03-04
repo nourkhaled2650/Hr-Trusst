@@ -15,7 +15,7 @@ export type LeaveId = Brand<number, "LeaveId">;
 export const UserRole = {
   EMPLOYEE: "employee",
   SUB_ADMIN: "sub_admin",
-  SUPER_ADMIN: "Admin",
+  SUPER_ADMIN: "ADMIN",
 } as const;
 
 export type Role = (typeof UserRole)[keyof typeof UserRole];

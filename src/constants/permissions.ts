@@ -38,7 +38,7 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     PERMISSIONS.VIEW_PAYROLL,
     PERMISSIONS.VIEW_REPORTS,
   ],
-  superadmin: [
+  Admin: [
     // Granted all — useHasPermission short-circuits for super_admin.
     // This list exists only for exhaustiveness; keep it complete.
     PERMISSIONS.VIEW_EMPLOYEES,
