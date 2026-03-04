@@ -15,7 +15,9 @@ async function bootstrapSession(): Promise<void> {
   if (refreshToken === null) return;
 
   try {
-    const { data: refreshResponse } = await axios.post<ApiResponse<LoginTokens>>(
+    const { data: refreshResponse } = await axios.post<
+      ApiResponse<LoginTokens>
+    >(
       `${import.meta.env.VITE_API_BASE_URL}/api/auth/refresh`,
       { refreshToken },
       { headers: { "Content-Type": "application/json" } },
@@ -26,12 +28,18 @@ async function bootstrapSession(): Promise<void> {
       return;
     }
 
-    const { accessToken: newAccess, refreshToken: newRefresh } = refreshResponse.data;
+    const { accessToken: newAccess, refreshToken: newRefresh } =
+      refreshResponse.data;
 
     // Fetch session to restore the full user object.
     const { data: sessionResponse } = await axios.get<ApiResponse<SessionUser>>(
       `${import.meta.env.VITE_API_BASE_URL}/api/auth/session`,
-      { headers: { Authorization: `Bearer ${newAccess}`, "Content-Type": "application/json" } },
+      {
+        headers: {
+          Authorization: `Bearer ${newAccess}`,
+          "Content-Type": "application/json",
+        },
+      },
     );
 
     if (
@@ -43,7 +51,9 @@ async function bootstrapSession(): Promise<void> {
       return;
     }
 
-    useAuthStore.getState().setAuth(sessionResponse.data as AppUser, newAccess, newRefresh);
+    useAuthStore
+      .getState()
+      .setAuth(sessionResponse.data as AppUser, newAccess, newRefresh);
   } catch {
     // Any error during bootstrap = treat as unauthenticated. Don't throw.
     useAuthStore.getState().clearAuth();

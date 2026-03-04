@@ -1,5 +1,9 @@
 import axios from "axios";
-import type { AxiosError, InternalAxiosRequestConfig } from "axios";
+import type {
+  AxiosError,
+  AxiosRequestConfig,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { toast } from "sonner";
 import type { ApiResponse, LoginTokens } from "@/types";
 import { useAuthStore } from "@/stores/auth.store";
@@ -8,12 +12,15 @@ declare module "axios" {
   interface InternalAxiosRequestConfig {
     _toast?: boolean;
   }
+  interface AxiosRequestConfig {
+    _toast?: boolean;
+  }
 }
 
 // ---------------------------------------------------------------------------
-// Single Axios instance — import `apiClient` everywhere; never create another.
+// Raw Axios instance — internal use only. Never import this directly.
 // ---------------------------------------------------------------------------
-export const apiClient = axios.create({
+const _http = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
   headers: { "Content-Type": "application/json" },
@@ -22,7 +29,7 @@ export const apiClient = axios.create({
 // ---------------------------------------------------------------------------
 // Request interceptor — attach Bearer token from the auth store on every call.
 // ---------------------------------------------------------------------------
-apiClient.interceptors.request.use(
+_http.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     const token = useAuthStore.getState().accessToken;
     if (token) {
@@ -62,7 +69,7 @@ function processQueue(err: unknown, token: string | null): void {
 // Response interceptor — handle success toasts, 401 with token refresh + retry,
 // and error toasts.
 // ---------------------------------------------------------------------------
-apiClient.interceptors.response.use(
+_http.interceptors.response.use(
   (response) => {
     const cfg = response.config as InternalAxiosRequestConfig;
     const shouldToast = cfg._toast !== false;
@@ -96,7 +103,9 @@ apiClient.interceptors.response.use(
       originalRequest.url === "/api/auth/refresh"
     ) {
       const statusCode = axiosError.response?.status;
-      const apiData = axiosError.response?.data as ApiResponse<unknown> | undefined;
+      const apiData = axiosError.response?.data as
+        | ApiResponse<unknown>
+        | undefined;
 
       if (shouldToast && apiData?.message && statusCode !== 401) {
         toast.error(apiData.message);
@@ -125,7 +134,7 @@ apiClient.interceptors.response.use(
             if (originalRequest.headers) {
               originalRequest.headers.set("Authorization", `Bearer ${token}`);
             }
-            resolve(apiClient(originalRequest));
+            resolve(_http(originalRequest));
           },
           reject,
         });
@@ -174,7 +183,7 @@ apiClient.interceptors.response.use(
 
       // Retry the original request.
       originalRequest.headers.set("Authorization", `Bearer ${newAccess}`);
-      return apiClient(originalRequest);
+      return _http(originalRequest);
     } catch (refreshError: unknown) {
       processQueue(refreshError, null);
       useAuthStore.getState().clearAuth();
@@ -188,3 +197,20 @@ apiClient.interceptors.response.use(
     }
   },
 );
+
+// ---------------------------------------------------------------------------
+// Typed API client — the backend always returns ApiResponse<T>.
+// Callers only specify the inner T; ApiResponse is implicit.
+// ---------------------------------------------------------------------------
+export const apiClient = {
+  get: <T>(url: string, config?: AxiosRequestConfig) =>
+    _http.get<ApiResponse<T>>(url, config),
+  post: <T>(url: string, data?: unknown, config?: AxiosRequestConfig) =>
+    _http.post<ApiResponse<T>>(url, data, config),
+  put: <T>(url: string, data?: unknown, config?: AxiosRequestConfig) =>
+    _http.put<ApiResponse<T>>(url, data, config),
+  patch: <T>(url: string, data?: unknown, config?: AxiosRequestConfig) =>
+    _http.patch<ApiResponse<T>>(url, data, config),
+  delete: <T>(url: string, config?: AxiosRequestConfig) =>
+    _http.delete<ApiResponse<T>>(url, config),
+};

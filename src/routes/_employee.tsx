@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { useAuthStore } from "@/stores/auth.store";
+import { UserRole } from "@/types";
 
 const EmployeeLayout = () => (
   <div className="min-h-screen bg-background">
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/_employee")({
     if (!isAuthenticated) {
       throw redirect({ to: "/login" });
     }
-    if (user?.role !== "employee") {
+    if (!user?.roles?.includes(UserRole.EMPLOYEE)) {
       throw redirect({ to: "/admin" });
     }
   },

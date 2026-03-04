@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthStore } from "@/stores/auth.store";
 import { UserRole } from "@/types";
-import type { AppUser } from "@/types";
 import { authApi } from "../api/auth.api";
 import { loginSchema, type LoginFormValues } from "../schemas/auth.schema";
 
@@ -35,7 +34,6 @@ export function useLogin() {
 
       // Step 2 — Session
       const sessionUser = await authApi.session();
-
       // Step 3 — Active check
       if (!sessionUser.isActive) {
         useAuthStore.getState().clearAuth();
@@ -44,7 +42,7 @@ export function useLogin() {
       }
 
       // Step 4 — Commit auth
-      setAuth(sessionUser as AppUser, tokens.accessToken, tokens.refreshToken);
+      setAuth(sessionUser, tokens.accessToken, tokens.refreshToken);
     } catch (error: unknown) {
       useAuthStore.getState().clearAuth();
       const apiMessage = extractApiErrorMessage(error);
@@ -56,7 +54,9 @@ export function useLogin() {
 
     // Only reached after a clean, committed auth state — navigate outside try-catch
     const { user } = useAuthStore.getState();
-    const destination = user?.role === UserRole.EMPLOYEE ? "/" : "/admin";
+    const destination = user?.roles?.includes(UserRole.EMPLOYEE)
+      ? "/"
+      : "/admin";
     void router.navigate({ to: destination, replace: true });
   });
 

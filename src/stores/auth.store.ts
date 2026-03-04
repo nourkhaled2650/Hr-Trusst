@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import type { AppUser, PermissionKey, Role } from "@/types";
 import { ROLE_PERMISSIONS } from "@/constants/permissions";
 import type { Permission } from "@/constants/permissions";
-
+import { UserRole } from "@/types";
 // ---------------------------------------------------------------------------
 // State shape
 // ---------------------------------------------------------------------------
@@ -71,9 +71,10 @@ export const useAuthStore = create<AuthStore>()(
       hasPermission: (key: PermissionKey): boolean => {
         const { user } = get();
         if (!user) return false;
-        if (user.role === "super_admin") return true;
-        const rolePermissions: Permission[] = ROLE_PERMISSIONS[user.role as Role];
-        return rolePermissions.includes(key as Permission);
+        if (user.roles.includes(UserRole.SUPER_ADMIN)) return true;
+        return user.roles.some((r) =>
+          ROLE_PERMISSIONS[r as Role]?.includes(key as Permission),
+        );
       },
     }),
     {

@@ -15,7 +15,7 @@ export type LeaveId = Brand<number, "LeaveId">;
 export const UserRole = {
   EMPLOYEE: "employee",
   SUB_ADMIN: "sub_admin",
-  SUPER_ADMIN: "super_admin",
+  SUPER_ADMIN: "Admin",
 } as const;
 
 export type Role = (typeof UserRole)[keyof typeof UserRole];
@@ -34,17 +34,14 @@ export interface SessionUser {
   email: string;
   isActive: boolean;
   createdAt: string; // ISO-8601
-  role: Role;
+  roles: Role[];
 }
 
 /**
  * App-level user — extends SessionUser.
- * Role is inherited from SessionUser (returned directly by /api/auth/session).
+ * roles is inherited from SessionUser (returned directly by /api/auth/session).
  * This is what the auth store holds.
  */
-export interface AppUser extends SessionUser {
-  role: Role;
-}
 
 /**
  * Legacy alias kept temporarily so that `_admin.tsx` and `_employee.tsx`
@@ -53,7 +50,7 @@ export interface AppUser extends SessionUser {
  *
  * @deprecated Use AppUser instead.
  */
-export type User = AppUser;
+// export type User = SessionUser;
 
 // ---------------------------------------------------------------------------
 // API envelope — matches backend shape exactly

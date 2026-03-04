@@ -1,3 +1,3 @@
 export { LoginForm } from "./components/LoginForm";
-export { useLogout } from "./api/auth.queries";
+export { useLogout } from "./hooks/use-logout";
 export { authApi } from "./api/auth.api";
