@@ -1,14 +1,21 @@
 import axios from "axios";
 import type { AxiosError, InternalAxiosRequestConfig } from "axios";
+import { toast } from "sonner";
 import type { ApiResponse, LoginTokens } from "@/types";
 import { useAuthStore } from "@/stores/auth.store";
+
+declare module "axios" {
+  interface InternalAxiosRequestConfig {
+    _toast?: boolean;
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Single Axios instance — import `apiClient` everywhere; never create another.
 // ---------------------------------------------------------------------------
 export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
-  // withCredentials: true,
+  withCredentials: true,
   headers: { "Content-Type": "application/json" },
 });
 
@@ -52,19 +59,34 @@ function processQueue(err: unknown, token: string | null): void {
 }
 
 // ---------------------------------------------------------------------------
-// Response interceptor — handle 401 with token refresh + retry.
+// Response interceptor — handle success toasts, 401 with token refresh + retry,
+// and error toasts.
 // ---------------------------------------------------------------------------
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    const cfg = response.config as InternalAxiosRequestConfig;
+    const shouldToast = cfg._toast !== false;
+    const isWrite = ["post", "put", "patch", "delete"].includes(
+      response.config.method?.toLowerCase() ?? "",
+    );
+    const apiData = response.data as ApiResponse<unknown>;
+
+    if (shouldToast && isWrite && apiData?.message) {
+      toast.success(apiData.message);
+    }
+
+    return response;
+  },
   async (error: unknown) => {
     if (!axios.isAxiosError(error)) {
       return Promise.reject(error);
     }
 
-    const axiosError = error as AxiosError;
+    const axiosError = error as AxiosError<ApiResponse<unknown>>;
     const originalRequest = axiosError.config as
       | (InternalAxiosRequestConfig & { _retry?: boolean })
       | undefined;
+    const shouldToast = originalRequest?._toast !== false;
 
     // Only handle 401 that is NOT already a retry and NOT the refresh call itself.
     if (
@@ -73,6 +95,13 @@ apiClient.interceptors.response.use(
       originalRequest._retry === true ||
       originalRequest.url === "/api/auth/refresh"
     ) {
+      const statusCode = axiosError.response?.status;
+      const apiData = axiosError.response?.data as ApiResponse<unknown> | undefined;
+
+      if (shouldToast && apiData?.message && statusCode !== 401) {
+        toast.error(apiData.message);
+      }
+
       return Promise.reject(error);
     }
 
@@ -84,7 +113,7 @@ apiClient.interceptors.response.use(
       // NOTE: window.location.replace is intentional here — do NOT change to router.navigate().
       // This interceptor lives outside the React tree and cannot access the router instance.
       // A router.navigate() call here would create an infinite interceptor loop.
-      window.location.replace("/login");
+      // window.location.replace("/login");
       return Promise.reject(error);
     }
 

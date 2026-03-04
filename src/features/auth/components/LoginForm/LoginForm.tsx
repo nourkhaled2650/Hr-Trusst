@@ -11,12 +11,6 @@ import {
 } from "@/components/ui/field";
 import { useLogin } from "../../hooks/use-login";
 
-const ERROR_MESSAGES = {
-  invalid_credentials: "Invalid email or password. Please try again.",
-  account_inactive: "Your account has been deactivated. Please contact HR.",
-  network: "Something went wrong. Please try again.",
-} as const;
-
 export function LoginForm() {
   const { form, onSubmit, loginError, isPending, handleFieldChange } =
     useLogin();
@@ -80,9 +74,7 @@ export function LoginForm() {
             {loginError !== null && (
               <Alert variant="destructive" role="alert">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  {ERROR_MESSAGES[loginError.type]}
-                </AlertDescription>
+                <AlertDescription>{loginError}</AlertDescription>
               </Alert>
             )}
 

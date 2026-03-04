@@ -7,6 +7,7 @@ export const authApi = {
     const { data } = await apiClient.post<ApiResponse<LoginTokens>>(
       "/api/auth/login",
       payload,
+      { _toast: false },
     );
     if (data.status !== "success" || data.data === null) {
       throw new Error(data.message ?? "Login failed");
@@ -17,9 +18,10 @@ export const authApi = {
   session: async (): Promise<SessionUser> => {
     const { data } = await apiClient.get<ApiResponse<SessionUser>>(
       "/api/auth/session",
+      { _toast: false },
     );
     if (data.status !== "success" || data.data === null) {
-      throw new Error("Session fetch failed");
+      throw new Error(data.message ?? "Session fetch failed");
     }
     return data.data;
   },

@@ -2,68 +2,65 @@ import { useState } from "react";
 import { useRouter } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { isAxiosError } from "axios";
 import { useAuthStore } from "@/stores/auth.store";
 import { UserRole } from "@/types";
 import type { AppUser } from "@/types";
-import { useLoginMutation, useSessionMutation } from "../api/auth.queries";
+import { authApi } from "../api/auth.api";
 import { loginSchema, type LoginFormValues } from "../schemas/auth.schema";
 
-type LoginError =
-  | { type: "invalid_credentials" }
-  | { type: "account_inactive" }
-  | { type: "network" };
+function extractApiErrorMessage(error: unknown): string | null {
+  if (error instanceof Error && error.message) return error.message;
+  return null;
+}
 
 export function useLogin() {
   const router = useRouter();
   const setAuth = useAuthStore((s) => s.setAuth);
-  const [loginError, setLoginError] = useState<LoginError | null>(null);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState(false);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
 
-  const { mutate: login, isPending } = useLoginMutation();
-  const { mutateAsync: fetchSession } = useSessionMutation();
-
-  const onSubmit = form.handleSubmit((values) => {
+  const onSubmit = form.handleSubmit(async (values: LoginFormValues) => {
     setLoginError(null);
-    login(values, {
-      onSuccess: async (tokens) => {
-        try {
-          // Temporarily store access token so the session call can attach it
-          useAuthStore.setState({ accessToken: tokens.accessToken });
+    setIsPending(true);
 
-          const sessionUser = await fetchSession();
+    try {
+      // Step 1 — Login
+      const tokens = await authApi.login(values);
+      useAuthStore.setState({ accessToken: tokens.accessToken });
 
-          if (!sessionUser.isActive) {
-            useAuthStore.getState().clearAuth();
-            setLoginError({ type: "account_inactive" });
-            return;
-          }
+      // Step 2 — Session
+      const sessionUser = await authApi.session();
 
-          setAuth(sessionUser as AppUser, tokens.accessToken, tokens.refreshToken);
-
-          const destination =
-            sessionUser.role === UserRole.EMPLOYEE ? "/" : "/admin";
-          router.navigate({ to: destination, replace: true });
-        } catch {
-          useAuthStore.getState().clearAuth();
-          setLoginError({ type: "network" });
-        }
-      },
-      onError: (error) => {
+      // Step 3 — Active check
+      if (!sessionUser.isActive) {
         useAuthStore.getState().clearAuth();
-        if (isAxiosError(error) && error.response?.status === 401) {
-          setLoginError({ type: "invalid_credentials" });
-        } else {
-          setLoginError({ type: "network" });
-        }
-      },
-    });
+        setLoginError("Your account has been deactivated. Please contact HR.");
+        return;
+      }
+
+      // Step 4 — Commit auth
+      setAuth(sessionUser as AppUser, tokens.accessToken, tokens.refreshToken);
+    } catch (error: unknown) {
+      useAuthStore.getState().clearAuth();
+      const apiMessage = extractApiErrorMessage(error);
+      setLoginError(apiMessage ?? "Something went wrong. Please try again.");
+      return;
+    } finally {
+      setIsPending(false);
+    }
+
+    // Only reached after a clean, committed auth state — navigate outside try-catch
+    const { user } = useAuthStore.getState();
+    const destination = user?.role === UserRole.EMPLOYEE ? "/" : "/admin";
+    void router.navigate({ to: destination, replace: true });
   });
 
+  // Clear error when the user starts typing again
   const handleFieldChange = () => {
     if (loginError !== null) setLoginError(null);
   };
