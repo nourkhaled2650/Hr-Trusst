@@ -36,13 +36,13 @@ function formatValidUntil(validUntil: string | null): string {
 function StatusBadge({ isExpired }: { isExpired: boolean }) {
   if (!isExpired) {
     return (
-      <Badge className="bg-violet-50 text-violet-700 border-violet-200 text-xs font-medium">
+      <Badge className="bg-brand-subtle text-brand border-brand-border text-xs font-medium">
         Active
       </Badge>
     );
   }
   return (
-    <Badge variant="outline" className="text-neutral-400 text-xs font-medium">
+    <Badge variant="outline" className="text-muted-foreground/70 text-xs font-medium">
       Expired
     </Badge>
   );
@@ -53,7 +53,7 @@ function StatusBadge({ isExpired }: { isExpired: boolean }) {
 // ---------------------------------------------------------------------------
 
 const TH_CLASS =
-  "text-xs font-medium text-neutral-500 uppercase tracking-wide whitespace-nowrap";
+  "text-xs font-medium text-muted-foreground uppercase tracking-wide whitespace-nowrap";
 
 // ---------------------------------------------------------------------------
 // Loading rows
@@ -99,14 +99,14 @@ export function ConfigHistoryTable({
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
-          <CardTitle className="text-base font-semibold text-neutral-900">
+          <CardTitle className="text-base font-semibold text-foreground">
             Configuration History
           </CardTitle>
           <CardDescription>
             All past configuration records, newest first.
           </CardDescription>
         </div>
-        <History className="h-5 w-5 text-neutral-400" />
+        <History className="h-5 w-5 text-muted-foreground/70" />
       </CardHeader>
 
       <CardContent className="p-0">
@@ -133,7 +133,7 @@ export function ConfigHistoryTable({
                 {isError && (
                   <TableRow>
                     <TableCell colSpan={9} className="text-center py-12">
-                      <p className="text-sm text-red-500">
+                      <p className="text-sm text-destructive">
                         Failed to load configuration history.
                       </p>
                     </TableCell>
@@ -144,7 +144,7 @@ export function ConfigHistoryTable({
                   <TableRow>
                     <TableCell
                       colSpan={9}
-                      className="text-center py-12 text-sm text-neutral-400"
+                      className="text-center py-12 text-sm text-muted-foreground/70"
                     >
                       No configuration history yet.
                     </TableCell>
@@ -155,7 +155,7 @@ export function ConfigHistoryTable({
                   sorted.map((config) => (
                     <TableRow key={config.settingId}>
                       <TableCell>
-                        <span className="font-mono text-xs text-neutral-500">
+                        <span className="font-mono text-xs text-muted-foreground">
                           #{config.settingId}
                         </span>
                       </TableCell>

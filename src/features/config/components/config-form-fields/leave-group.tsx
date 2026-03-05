@@ -18,7 +18,7 @@ export function LeaveGroup({ form, disabled }: Props) {
   return (
     <div>
       <div className="flex items-center gap-3 mb-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500 whitespace-nowrap">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground whitespace-nowrap">
           Leave
         </p>
         <Separator className="flex-1" />
@@ -26,7 +26,7 @@ export function LeaveGroup({ form, disabled }: Props) {
 
       <Field>
         <FieldLabel htmlFor="leaveBalanceLimit">Annual Leave Days</FieldLabel>
-        <p className="text-xs text-neutral-500 mt-0.5 mb-1.5">
+        <p className="text-xs text-muted-foreground mt-0.5 mb-1.5">
           Number of paid leave days granted to each full-time employee per year
           (e.g. 21).
         </p>

@@ -36,9 +36,9 @@ type NavItem = {
 };
 
 const BASE_LINK =
-  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 transition-colors duration-150";
+  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors duration-150";
 const ACTIVE_LINK =
-  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium bg-violet-50 text-violet-700 transition-colors duration-150";
+  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium bg-brand-subtle text-brand transition-colors duration-150";
 
 export function AdminSidebar() {
   const sidebarOpen = useUIStore((s) => s.sidebarOpen);
@@ -110,7 +110,7 @@ export function AdminSidebar() {
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 h-screen bg-white border-r border-neutral-200 flex flex-col z-40",
+        "fixed top-0 left-0 h-screen bg-white border-r border flex flex-col z-40",
         "transition-all duration-200 ease-in-out",
         sidebarOpen ? "w-60" : "w-14",
       )}
@@ -138,13 +138,13 @@ export function AdminSidebar() {
       {/* Collapse toggle */}
       <button
         onClick={toggleSidebar}
-        className="absolute -right-3 top-[68px] z-50 h-6 w-6 rounded-full bg-white border border-neutral-200 shadow-sm flex items-center justify-center hover:bg-neutral-50"
+        className="absolute -right-3 top-[68px] z-50 h-6 w-6 rounded-full bg-white border border shadow-sm flex items-center justify-center hover:bg-muted/50"
         aria-label={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
       >
         {sidebarOpen ? (
-          <ChevronLeft className="h-3 w-3 text-neutral-600" />
+          <ChevronLeft className="h-3 w-3 text-muted-foreground" />
         ) : (
-          <ChevronRight className="h-3 w-3 text-neutral-600" />
+          <ChevronRight className="h-3 w-3 text-muted-foreground" />
         )}
       </button>
 
@@ -158,7 +158,7 @@ export function AdminSidebar() {
             ))}
 
           {adminNav.some((item) => item.visible) && (
-            <div className="my-2 h-px bg-neutral-200 mx-1" />
+            <div className="my-2 h-px bg-muted mx-1" />
           )}
 
           {adminNav
@@ -170,25 +170,25 @@ export function AdminSidebar() {
       </TooltipProvider>
 
       {/* User mini-card */}
-      <div className="border-t border-neutral-200 p-2 shrink-0">
+      <div className="border-t border p-2 shrink-0">
         {sidebarOpen ? (
           <div className="flex items-center gap-2 rounded-md p-2">
             <Avatar className="h-8 w-8 shrink-0">
-              <AvatarFallback className="bg-violet-600 text-white text-xs font-semibold">
+              <AvatarFallback className="bg-brand text-white text-xs font-semibold">
                 {initials}
               </AvatarFallback>
             </Avatar>
             <div className="min-w-0">
-              <p className="text-sm font-medium text-neutral-800 truncate">
+              <p className="text-sm font-medium text-foreground truncate">
                 {user?.username}
               </p>
-              <p className="text-xs text-neutral-400 truncate">{user?.email}</p>
+              <p className="text-xs text-muted-foreground/70 truncate">{user?.email}</p>
             </div>
           </div>
         ) : (
           <div className="flex justify-center py-1">
             <Avatar className="h-8 w-8">
-              <AvatarFallback className="bg-violet-600 text-white text-xs font-semibold">
+              <AvatarFallback className="bg-brand text-white text-xs font-semibold">
                 {initials}
               </AvatarFallback>
             </Avatar>

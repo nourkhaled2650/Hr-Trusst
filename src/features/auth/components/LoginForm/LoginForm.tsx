@@ -20,7 +20,7 @@ export function LoginForm() {
   } = form;
 
   return (
-    <Card className="w-full max-w-md rounded-2xl border border-neutral-200 shadow-lg bg-background/60">
+    <Card className="w-full max-w-md rounded-2xl border border shadow-lg bg-background/60">
       <CardContent>
         <div className="flex flex-col space-y-2">
           {/* Logo */}
@@ -30,10 +30,10 @@ export function LoginForm() {
 
           {/* Heading */}
           <div className="text-center space-y-1">
-            <h1 className="text-2xl font-semibold tracking-tight text-neutral-900">
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">
               Welcome back
             </h1>
-            <p className="text-sm text-neutral-500">
+            <p className="text-sm text-muted-foreground">
               Sign in to your Trusst account
             </p>
           </div>

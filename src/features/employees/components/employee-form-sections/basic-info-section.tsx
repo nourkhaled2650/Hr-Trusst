@@ -27,7 +27,7 @@ export function BasicInfoSection({ form, disabled }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-neutral-900">
+        <CardTitle className="text-base font-semibold text-foreground">
           Basic Info
         </CardTitle>
         <CardDescription>Personal details for this employee</CardDescription>

@@ -24,7 +24,7 @@ export function CompensationSection({ form, disabled }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-neutral-900">
+        <CardTitle className="text-base font-semibold text-foreground">
           Compensation
         </CardTitle>
         <CardDescription>Monthly salary configuration</CardDescription>
@@ -37,7 +37,7 @@ export function CompensationSection({ form, disabled }: Props) {
             name="basicSalary"
             render={({ field }) => (
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-neutral-400 pointer-events-none">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground/70 pointer-events-none">
                   EGP
                 </span>
                 <Input

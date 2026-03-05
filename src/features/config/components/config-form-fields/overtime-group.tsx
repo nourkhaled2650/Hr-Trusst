@@ -18,7 +18,7 @@ export function OvertimeGroup({ form, disabled }: Props) {
   return (
     <div>
       <div className="flex items-center gap-3 mb-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500 whitespace-nowrap">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground whitespace-nowrap">
           Overtime
         </p>
         <Separator className="flex-1" />
@@ -29,7 +29,7 @@ export function OvertimeGroup({ form, disabled }: Props) {
           <FieldLabel htmlFor="normalOvertimeRate">
             Normal Overtime Rate
           </FieldLabel>
-          <p className="text-xs text-neutral-500 mt-0.5 mb-1.5">
+          <p className="text-xs text-muted-foreground mt-0.5 mb-1.5">
             Multiplier applied to the hourly rate for normal overtime hours
             (e.g. 1.5 = 150% of base rate).
           </p>
@@ -49,7 +49,7 @@ export function OvertimeGroup({ form, disabled }: Props) {
           <FieldLabel htmlFor="specialOvertimeRate">
             Special Overtime Rate
           </FieldLabel>
-          <p className="text-xs text-neutral-500 mt-0.5 mb-1.5">
+          <p className="text-xs text-muted-foreground mt-0.5 mb-1.5">
             Multiplier for overtime worked on public holidays or special
             occasions (e.g. 2.0 = double pay).
           </p>

@@ -129,15 +129,15 @@ export function EmployeeTable({
         </div>
       ) : employees.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 text-center">
-          <Users className="h-12 w-12 text-neutral-300 mb-4" />
-          <p className="text-base font-medium text-neutral-600">
+          <Users className="h-12 w-12 text-muted-foreground/40 mb-4" />
+          <p className="text-base font-medium text-muted-foreground">
             No employees yet
           </p>
-          <p className="text-sm text-neutral-400 mt-1">
+          <p className="text-sm text-muted-foreground/70 mt-1">
             Add your first employee to get started.
           </p>
           <Button
-            className="mt-6 bg-violet-600 hover:bg-violet-700"
+            className="mt-6 bg-brand hover:bg-brand-hover"
             onClick={onCreateClick}
           >
             <Plus className="h-4 w-4 mr-2" /> New Employee
@@ -145,17 +145,17 @@ export function EmployeeTable({
         </div>
       ) : filtered.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
-          <SearchX className="h-10 w-10 text-neutral-300 mb-3" />
-          <p className="text-sm font-medium text-neutral-600">
+          <SearchX className="h-10 w-10 text-muted-foreground/40 mb-3" />
+          <p className="text-sm font-medium text-muted-foreground">
             No employees match your search
           </p>
-          <p className="text-xs text-neutral-400 mt-1">
+          <p className="text-xs text-muted-foreground/70 mt-1">
             Try adjusting your search or filter.
           </p>
         </div>
       ) : (
         <>
-          <div className="rounded-md border border-neutral-200 bg-white overflow-hidden">
+          <div className="rounded-md border border bg-white overflow-hidden">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -170,19 +170,19 @@ export function EmployeeTable({
                 {pageRows.map((employee) => (
                   <TableRow
                     key={Number(employee.employeeId)}
-                    className="cursor-pointer hover:bg-neutral-50"
+                    className="cursor-pointer hover:bg-muted/50"
                     onClick={() => onNavigate(employee)}
                   >
                     <TableCell>
                       <EmployeeNameCell employee={employee} />
                     </TableCell>
                     <TableCell>
-                      <span className="text-sm text-neutral-600">
+                      <span className="text-sm text-muted-foreground">
                         {employee.email}
                       </span>
                     </TableCell>
                     <TableCell>
-                      <span className="text-sm text-neutral-600">
+                      <span className="text-sm text-muted-foreground">
                         {employee.position ?? "—"}
                       </span>
                     </TableCell>
@@ -203,7 +203,7 @@ export function EmployeeTable({
 
           {/* Pagination */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm text-neutral-500">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span>Rows per page:</span>
               <Select
                 value={String(pageSize)}
@@ -221,7 +221,7 @@ export function EmployeeTable({
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center gap-2 text-sm text-neutral-500">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span>
                 Page {safePageIndex + 1} of {pageCount}
               </span>

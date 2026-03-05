@@ -8,21 +8,21 @@ const STATUS_CONFIG: Record<
   ACTIVE: {
     label: "Active",
     className:
-      "bg-green-50 text-green-700 border border-green-200 font-medium",
+      "bg-success-subtle text-success border border-success-border font-medium",
   },
   COMPLETED: {
     label: "Completed",
     className:
-      "bg-neutral-100 text-neutral-600 border border-neutral-200 font-medium",
+      "bg-muted text-muted-foreground border border font-medium",
   },
   ON_HOLD: {
     label: "On Hold",
     className:
-      "bg-amber-50 text-amber-700 border border-amber-200 font-medium",
+      "bg-warning-subtle text-warning-foreground border border-warning-border font-medium",
   },
   CANCELLED: {
     label: "Cancelled",
-    className: "bg-red-50 text-red-700 border border-red-200 font-medium",
+    className: "bg-destructive/10 text-destructive border border-destructive/30 font-medium",
   },
 };
 

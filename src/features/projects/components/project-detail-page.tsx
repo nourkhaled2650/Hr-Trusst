@@ -155,11 +155,11 @@ export function ProjectDetailPage({ projectId }: Props) {
   if (isError || !project) {
     return (
       <div className="p-6 flex flex-col items-center justify-center py-24 text-center">
-        <FolderX className="h-12 w-12 text-neutral-300 mb-4" />
-        <p className="text-base font-medium text-neutral-600">
+        <FolderX className="h-12 w-12 text-muted-foreground/40 mb-4" />
+        <p className="text-base font-medium text-muted-foreground">
           Project not found
         </p>
-        <p className="text-sm text-neutral-400 mt-1">
+        <p className="text-sm text-muted-foreground/70 mt-1">
           This project may have been deleted or the link is invalid.
         </p>
         <Button
@@ -181,7 +181,7 @@ export function ProjectDetailPage({ projectId }: Props) {
         {/* Breadcrumb */}
         <Link
           to="/admin/projects"
-          className="inline-flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-900 transition-colors"
+          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           <ChevronLeft className="h-4 w-4" />
           Projects
@@ -193,15 +193,15 @@ export function ProjectDetailPage({ projectId }: Props) {
             <div className="flex items-center justify-between flex-wrap gap-3">
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h1 className="text-xl font-semibold text-neutral-900">
+                  <h1 className="text-xl font-semibold text-foreground">
                     {project.projectName}
                   </h1>
                   <ProjectStatusBadge status={project.status} />
                 </div>
-                <span className="text-sm text-neutral-400 font-mono">
+                <span className="text-sm text-muted-foreground/70 font-mono">
                   {project.projectCode}
                 </span>
-                <p className="text-sm text-neutral-500 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   {formatDate(project.startDate)} → {formatDate(project.endDate)}
                 </p>
               </div>
@@ -212,7 +212,7 @@ export function ProjectDetailPage({ projectId }: Props) {
         {/* Project Info Card */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base font-semibold text-neutral-900">
+            <CardTitle className="text-base font-semibold text-foreground">
               Project Info
             </CardTitle>
             <CardDescription>
@@ -238,7 +238,7 @@ export function ProjectDetailPage({ projectId }: Props) {
               <div className="flex justify-end pt-6">
                 <Button
                   type="submit"
-                  className="bg-violet-600 hover:bg-violet-700"
+                  className="bg-brand hover:bg-brand-hover"
                   disabled={isPending || !form.formState.isDirty}
                 >
                   {isPending ? (
@@ -273,7 +273,7 @@ export function ProjectDetailPage({ projectId }: Props) {
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isClosing}>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-destructive hover:bg-destructive text-white"
               onClick={() => void handleCloseProject()}
               disabled={isClosing}
             >

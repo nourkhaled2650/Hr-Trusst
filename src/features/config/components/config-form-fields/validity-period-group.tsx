@@ -41,7 +41,7 @@ export function ValidityPeriodGroup({ form, disabled }: Props) {
   return (
     <div>
       <div className="flex items-center gap-3 mb-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500 whitespace-nowrap">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground whitespace-nowrap">
           Validity Period
         </p>
         <Separator className="flex-1" />
@@ -51,7 +51,7 @@ export function ValidityPeriodGroup({ form, disabled }: Props) {
         {/* Activation Date */}
         <Field>
           <FieldLabel htmlFor="validFrom-date">Activation Date</FieldLabel>
-          <p className="text-xs text-neutral-500 mt-0.5 mb-1.5">
+          <p className="text-xs text-muted-foreground mt-0.5 mb-1.5">
             Date and time from which this configuration becomes effective.
           </p>
           <Controller
@@ -97,7 +97,7 @@ export function ValidityPeriodGroup({ form, disabled }: Props) {
         {/* Inactivation Date */}
         <Field>
           <FieldLabel htmlFor="validUntil-date">Inactivation Date</FieldLabel>
-          <p className="text-xs text-neutral-500 mt-0.5 mb-1.5">
+          <p className="text-xs text-muted-foreground mt-0.5 mb-1.5">
             Date and time at which this configuration expires.
           </p>
           <Controller

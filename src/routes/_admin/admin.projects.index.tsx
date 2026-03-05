@@ -37,9 +37,9 @@ function AdminProjectsPage() {
   return (
     <div className="p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-neutral-900">Projects</h1>
+        <h1 className="text-2xl font-semibold text-foreground">Projects</h1>
         <Button
-          className="bg-violet-600 hover:bg-violet-700"
+          className="bg-brand hover:bg-brand-hover"
           onClick={() => setCreateOpen(true)}
         >
           <Plus className="h-4 w-4 mr-2" />

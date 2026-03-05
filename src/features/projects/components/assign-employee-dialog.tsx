@@ -119,7 +119,7 @@ export function AssignEmployeeDialog({ open, onOpenChange, projectId }: Props) {
           >
             <Field>
               <FieldLabel htmlFor="employeeId">
-                Employee <span className="text-red-500">*</span>
+                Employee <span className="text-destructive">*</span>
               </FieldLabel>
               <Controller
                 control={control}
@@ -188,7 +188,7 @@ export function AssignEmployeeDialog({ open, onOpenChange, projectId }: Props) {
               </Button>
               <Button
                 type="submit"
-                className="bg-violet-600 hover:bg-violet-700"
+                className="bg-brand hover:bg-brand-hover"
                 disabled={isPending || employeesLoading}
               >
                 {isPending ? (

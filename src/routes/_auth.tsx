@@ -3,7 +3,7 @@ import { useAuthStore } from "@/stores/auth.store";
 
 const AuthLayout = () => (
   <div
-    className="min-h-screen w-full flex items-center justify-center bg-neutral-50"
+    className="min-h-screen w-full flex items-center justify-center bg-muted/50"
     style={{
       backgroundImage:
         "linear-gradient(145deg,var(--background) 0%,var(--secondary) 40%,var(--muted) 100%)",

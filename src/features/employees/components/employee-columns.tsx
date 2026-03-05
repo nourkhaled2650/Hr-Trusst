@@ -18,7 +18,7 @@ export function EmployeeTypeBadge({
     return (
       <Badge
         variant="secondary"
-        className="bg-violet-50 text-violet-700 border-violet-200 font-medium"
+        className="bg-brand-subtle text-brand border-brand-border font-medium"
       >
         Full-time
       </Badge>
@@ -26,13 +26,13 @@ export function EmployeeTypeBadge({
   }
   if (type === "PART_TIME") {
     return (
-      <Badge variant="outline" className="text-neutral-600 font-medium">
+      <Badge variant="outline" className="text-muted-foreground font-medium">
         Part-time
       </Badge>
     );
   }
   return (
-    <Badge variant="outline" className="text-neutral-400">
+    <Badge variant="outline" className="text-muted-foreground/70">
       Not set
     </Badge>
   );
@@ -48,19 +48,19 @@ export function EmployeeNameCell({ employee }: { employee: Employee }) {
   return (
     <div className="flex items-center gap-3">
       <Avatar className="h-8 w-8 shrink-0">
-        <AvatarFallback className="bg-violet-100 text-violet-700 text-xs font-semibold">
+        <AvatarFallback className="bg-brand-muted text-brand text-xs font-semibold">
           {initials}
         </AvatarFallback>
       </Avatar>
       <div className="min-w-0">
         {fullName ? (
-          <p className="text-sm font-medium text-neutral-900 truncate">
+          <p className="text-sm font-medium text-foreground truncate">
             {fullName}
           </p>
         ) : (
-          <p className="text-sm text-neutral-400 italic">Name not set</p>
+          <p className="text-sm text-muted-foreground/70 italic">Name not set</p>
         )}
-        <p className="text-xs text-neutral-500">{employee.employeeCode}</p>
+        <p className="text-xs text-muted-foreground">{employee.employeeCode}</p>
       </div>
     </div>
   );
@@ -86,7 +86,7 @@ export function EmployeeRowAction({
         onNavigate(employee);
       }}
     >
-      <ChevronRight className="h-4 w-4 text-neutral-500" />
+      <ChevronRight className="h-4 w-4 text-muted-foreground" />
     </Button>
   );
 }

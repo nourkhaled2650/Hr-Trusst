@@ -24,7 +24,7 @@ export function AttendanceGroup({ form, disabled }: Props) {
   return (
     <div>
       <div className="flex items-center gap-3 mb-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500 whitespace-nowrap">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground whitespace-nowrap">
           Attendance
         </p>
         <Separator className="flex-1" />
@@ -36,7 +36,7 @@ export function AttendanceGroup({ form, disabled }: Props) {
             <FieldLabel htmlFor="standardWorkingHours">
               Standard Working Hours
             </FieldLabel>
-            <p className="text-xs text-neutral-500 mt-0.5 mb-1.5">
+            <p className="text-xs text-muted-foreground mt-0.5 mb-1.5">
               The expected number of working hours per day for full-time
               employees (e.g. 8.5).
             </p>
@@ -56,7 +56,7 @@ export function AttendanceGroup({ form, disabled }: Props) {
             <FieldLabel htmlFor="workingDayStartTime">
               Working Day Start Time
             </FieldLabel>
-            <p className="text-xs text-neutral-500 mt-0.5 mb-1.5">
+            <p className="text-xs text-muted-foreground mt-0.5 mb-1.5">
               Official start of the working day. Used to calculate lateness
               (e.g. 09:00).
             </p>
@@ -79,7 +79,7 @@ export function AttendanceGroup({ form, disabled }: Props) {
 
         <Field>
           <FieldLabel htmlFor="lateBalanceLimit">Late Grace Hours</FieldLabel>
-          <p className="text-xs text-neutral-500 mt-0.5 mb-1.5">
+          <p className="text-xs text-muted-foreground mt-0.5 mb-1.5">
             Monthly grace period (in hours) before lateness begins affecting
             payroll (e.g. 6.0).
           </p>

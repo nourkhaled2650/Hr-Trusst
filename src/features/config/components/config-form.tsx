@@ -83,16 +83,16 @@ type EmptyStateProps = {
 function ConfigEmptyState({ onCreateClick }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <Settings className="h-12 w-12 text-neutral-300 mb-4" />
-      <p className="text-base font-medium text-neutral-700">
+      <Settings className="h-12 w-12 text-muted-foreground/40 mb-4" />
+      <p className="text-base font-medium text-foreground/80">
         No configuration set yet
       </p>
-      <p className="text-sm text-neutral-400 mt-1 max-w-sm">
+      <p className="text-sm text-muted-foreground/70 mt-1 max-w-sm">
         The system has no active payroll settings. Create an initial
         configuration to enable payroll calculations.
       </p>
       <Button
-        className="mt-6 bg-violet-600 hover:bg-violet-700"
+        className="mt-6 bg-brand hover:bg-brand-hover"
         onClick={onCreateClick}
       >
         <Plus className="h-4 w-4 mr-2" />
@@ -171,17 +171,17 @@ function ConfigFormBody({ config, isCreateMode }: FormBodyProps) {
 
           {/* Read-only metadata — only shown when editing an existing record */}
           {config !== null && (
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-neutral-400 pt-2 border-t border-neutral-100">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-muted-foreground/70 pt-2 border-t border">
               <span>
                 Config ID:{" "}
-                <span className="font-mono text-neutral-500">
+                <span className="font-mono text-muted-foreground">
                   {config.settingId}
                 </span>
               </span>
               {config.isExpired && (
                 <Badge
                   variant="outline"
-                  className="text-red-500 border-red-200 text-xs"
+                  className="text-destructive border-destructive/30 text-xs"
                 >
                   Expired
                 </Badge>
@@ -201,7 +201,7 @@ function ConfigFormBody({ config, isCreateMode }: FormBodyProps) {
           <div className="flex justify-end pt-2">
             <Button
               type="button"
-              className="bg-violet-600 hover:bg-violet-700 w-full sm:w-auto"
+              className="bg-brand hover:bg-brand-hover w-full sm:w-auto"
               disabled={(!isDirty && !isCreateMode) || isPending}
               onClick={async () => {
                 const valid = await trigger();
@@ -219,7 +219,7 @@ function ConfigFormBody({ config, isCreateMode }: FormBodyProps) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-amber-500" />
+              <AlertTriangle className="h-5 w-5 text-warning" />
               System-wide impact
             </AlertDialogTitle>
             <AlertDialogDescription>
@@ -230,7 +230,7 @@ function ConfigFormBody({ config, isCreateMode }: FormBodyProps) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-violet-600 hover:bg-violet-700"
+              className="bg-brand hover:bg-brand-hover"
               onClick={handleConfirmedSave}
             >
               Yes, save configuration
@@ -263,7 +263,7 @@ export function ConfigForm({ isLoading, isError, config }: ConfigFormProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-neutral-900">
+        <CardTitle className="text-base font-semibold text-foreground">
           Current Configuration
         </CardTitle>
         <CardDescription>

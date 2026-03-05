@@ -33,7 +33,7 @@ export function EmploymentDetailsSection({ form, disabled }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-neutral-900">
+        <CardTitle className="text-base font-semibold text-foreground">
           Employment Details
         </CardTitle>
         <CardDescription>Role and employment information</CardDescription>

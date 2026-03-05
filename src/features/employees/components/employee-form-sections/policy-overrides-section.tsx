@@ -46,7 +46,7 @@ export function PolicyOverridesSection({ form, disabled }: Props) {
           <CollapsibleTrigger asChild>
             <div className="flex items-center justify-between cursor-pointer select-none">
               <div className="flex items-center gap-2">
-                <CardTitle className="text-base font-semibold text-neutral-900">
+                <CardTitle className="text-base font-semibold text-foreground">
                   Policy Overrides
                 </CardTitle>
                 <Badge variant="outline" className="ml-2 text-xs">
@@ -54,9 +54,9 @@ export function PolicyOverridesSection({ form, disabled }: Props) {
                 </Badge>
               </div>
               {open ? (
-                <ChevronDown className="h-4 w-4 text-neutral-500 transition-transform duration-200" />
+                <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200" />
               ) : (
-                <ChevronRight className="h-4 w-4 text-neutral-500 transition-transform duration-200" />
+                <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform duration-200" />
               )}
             </div>
           </CollapsibleTrigger>
@@ -66,9 +66,9 @@ export function PolicyOverridesSection({ form, disabled }: Props) {
           <CardContent className="pt-4 space-y-4">
             {/* Part-time warning */}
             {employeeType === "PART_TIME" && (
-              <Alert className="border-amber-200 bg-amber-50">
-                <AlertTriangle className="h-4 w-4 text-amber-600" />
-                <AlertDescription className="text-amber-800 text-sm">
+              <Alert className="border-warning-border bg-warning-subtle">
+                <AlertTriangle className="h-4 w-4 text-warning" />
+                <AlertDescription className="text-warning-foreground text-sm">
                   Policy overrides have no effect for part-time employees.
                   Part-time payroll uses only hours worked × hourly rate.
                 </AlertDescription>
@@ -227,9 +227,9 @@ export function PolicyOverridesSection({ form, disabled }: Props) {
             </div>
 
             {/* Info callout */}
-            <Alert className="mt-4 border-violet-200 bg-violet-50">
-              <Info className="h-4 w-4 text-violet-600" />
-              <AlertDescription className="text-violet-800 text-sm">
+            <Alert className="mt-4 border-brand-border bg-brand-subtle">
+              <Info className="h-4 w-4 text-brand" />
+              <AlertDescription className="text-brand text-sm">
                 Blank fields inherit the system default from Payroll Settings.
                 Set a value only to override for this specific employee.
               </AlertDescription>

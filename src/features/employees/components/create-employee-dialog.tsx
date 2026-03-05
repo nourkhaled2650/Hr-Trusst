@@ -159,13 +159,13 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
             onChange={handleFieldChange}
           >
             {/* Account section */}
-            <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Account
             </p>
 
             <Field>
               <FieldLabel htmlFor="email">
-                Email <span className="text-red-500">*</span>
+                Email <span className="text-destructive">*</span>
               </FieldLabel>
               <Input
                 id="email"
@@ -179,7 +179,7 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
 
             <Field>
               <FieldLabel htmlFor="username">
-                Username <span className="text-red-500">*</span>
+                Username <span className="text-destructive">*</span>
               </FieldLabel>
               <Input
                 id="username"
@@ -192,7 +192,7 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
 
             <Field>
               <FieldLabel htmlFor="password">
-                Password <span className="text-red-500">*</span>
+                Password <span className="text-destructive">*</span>
               </FieldLabel>
               <div className="relative">
                 <Input
@@ -213,9 +213,9 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
                     tabIndex={-1}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-neutral-400" />
+                      <EyeOff className="h-4 w-4 text-muted-foreground/70" />
                     ) : (
-                      <Eye className="h-4 w-4 text-neutral-400" />
+                      <Eye className="h-4 w-4 text-muted-foreground/70" />
                     )}
                   </Button>
                 )}
@@ -232,7 +232,7 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
                 />
                 <label
                   htmlFor="auto-generate"
-                  className="text-sm text-neutral-600 cursor-pointer select-none"
+                  className="text-sm text-muted-foreground cursor-pointer select-none"
                 >
                   Auto-generate password
                 </label>
@@ -264,7 +264,7 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
             <Separator />
 
             {/* Profile section */}
-            <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Profile
             </p>
 
@@ -365,7 +365,7 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
               </Button>
               <Button
                 type="submit"
-                className="bg-violet-600 hover:bg-violet-700"
+                className="bg-brand hover:bg-brand-hover"
                 disabled={isPending}
               >
                 {isPending ? (

@@ -25,10 +25,10 @@ function AdminConfigPage() {
     <div className="p-6 space-y-6">
       {/* Page header */}
       <div>
-        <h1 className="text-2xl font-semibold text-neutral-900">
+        <h1 className="text-2xl font-semibold text-foreground">
           System Configuration
         </h1>
-        <p className="text-sm text-neutral-500 mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Manage company-wide HR policy values.
         </p>
       </div>

@@ -28,23 +28,23 @@ export function UserDropdown({ hideLabel = false }: Props) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="flex items-center gap-2 px-2">
           <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-violet-600 text-white text-xs font-semibold">
+            <AvatarFallback className="bg-brand text-white text-xs font-semibold">
               {initials}
             </AvatarFallback>
           </Avatar>
           {!hideLabel && (
             <>
-              <span className="text-sm font-medium text-neutral-700 hidden sm:block">
+              <span className="text-sm font-medium text-foreground/80 hidden sm:block">
                 {user?.username}
               </span>
-              <ChevronDown className="h-4 w-4 text-neutral-400 hidden sm:block" />
+              <ChevronDown className="h-4 w-4 text-muted-foreground/70 hidden sm:block" />
             </>
           )}
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuLabel className="text-xs text-neutral-500 font-normal">
+        <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
           {user?.email}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -56,7 +56,7 @@ export function UserDropdown({ hideLabel = false }: Props) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="text-red-600 focus:text-red-600 focus:bg-red-50 flex items-center gap-2 cursor-pointer"
+          className="text-destructive focus:text-destructive focus:bg-destructive/10 flex items-center gap-2 cursor-pointer"
           disabled={isPending}
           onSelect={logout}
         >

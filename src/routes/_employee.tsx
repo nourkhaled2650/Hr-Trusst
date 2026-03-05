@@ -4,7 +4,7 @@ import { UserRole } from "@/types";
 import { EmployeeNavbar } from "@/components/shared/EmployeeNavbar";
 
 const EmployeeLayout = () => (
-  <div className="min-h-screen bg-neutral-50">
+  <div className="min-h-screen bg-muted/50">
     <EmployeeNavbar />
     <main className="pt-14 min-h-screen">
       <Outlet />

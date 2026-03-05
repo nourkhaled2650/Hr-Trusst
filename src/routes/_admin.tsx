@@ -9,7 +9,7 @@ import { AdminNavbar } from "@/components/shared/AdminNavbar";
 const AdminLayout = () => {
   const sidebarOpen = useUIStore((s) => s.sidebarOpen);
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <div className="min-h-screen bg-muted/50">
       <AdminSidebar />
       <AdminNavbar />
       <main

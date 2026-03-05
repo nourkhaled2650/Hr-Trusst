@@ -35,7 +35,7 @@ export function ProjectInfoForm({
     <div className="space-y-4">
       <Field>
         <FieldLabel htmlFor="projectName">
-          Project Name <span className="text-red-500">*</span>
+          Project Name <span className="text-destructive">*</span>
         </FieldLabel>
         <Input
           id="projectName"
@@ -47,7 +47,7 @@ export function ProjectInfoForm({
 
       <Field>
         <FieldLabel htmlFor="projectCode">
-          Project Code <span className="text-red-500">*</span>
+          Project Code <span className="text-destructive">*</span>
         </FieldLabel>
         <Input
           id="projectCode"
@@ -109,7 +109,7 @@ export function ProjectInfoForm({
 
       <Field>
         <FieldLabel htmlFor="status">
-          Status <span className="text-red-500">*</span>
+          Status <span className="text-destructive">*</span>
         </FieldLabel>
         <Controller
           control={control}
@@ -138,15 +138,15 @@ export function ProjectInfoForm({
       {projectStatus !== "COMPLETED" && (
         <div className="pt-4">
           <Separator className="mb-4" />
-          <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-3">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/70 mb-3">
             Danger Zone
           </p>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-neutral-700">
+              <p className="text-sm font-medium text-foreground/80">
                 Close this project
               </p>
-              <p className="text-xs text-neutral-500 mt-0.5">
+              <p className="text-xs text-muted-foreground mt-0.5">
                 Marks the project as Completed. Employees will no longer be
                 able to log hours.
               </p>
@@ -154,7 +154,7 @@ export function ProjectInfoForm({
             <Button
               type="button"
               variant="outline"
-              className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 ml-6 shrink-0"
+              className="border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive ml-6 shrink-0"
               onClick={onCloseProjectClick}
               disabled={disabled}
             >

@@ -127,7 +127,7 @@ export function CreateProjectDialog({ open, onOpenChange }: Props) {
           >
             <Field>
               <FieldLabel htmlFor="projectName">
-                Project Name <span className="text-red-500">*</span>
+                Project Name <span className="text-destructive">*</span>
               </FieldLabel>
               <Input
                 id="projectName"
@@ -139,7 +139,7 @@ export function CreateProjectDialog({ open, onOpenChange }: Props) {
 
             <Field>
               <FieldLabel htmlFor="projectCode">
-                Project Code <span className="text-red-500">*</span>
+                Project Code <span className="text-destructive">*</span>
               </FieldLabel>
               <Input
                 id="projectCode"
@@ -153,7 +153,7 @@ export function CreateProjectDialog({ open, onOpenChange }: Props) {
                   });
                 }}
               />
-              <p className="text-xs text-neutral-400 mt-1">
+              <p className="text-xs text-muted-foreground/70 mt-1">
                 Unique identifier for this project. Cannot be changed later.
               </p>
               <FieldError errors={[errors.projectCode]} />
@@ -257,7 +257,7 @@ export function CreateProjectDialog({ open, onOpenChange }: Props) {
               </Button>
               <Button
                 type="submit"
-                className="bg-violet-600 hover:bg-violet-700"
+                className="bg-brand hover:bg-brand-hover"
                 disabled={isPending}
               >
                 {isPending ? (

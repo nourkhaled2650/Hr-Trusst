@@ -41,16 +41,16 @@ const MOBILE_NAV_ITEMS: MobileNavItem[] = [
   { label: "Payslips", to: ROUTES.EMPLOYEE_PAYSLIPS, icon: Receipt },
 ];
 
-const DESKTOP_LINK = "text-sm font-medium text-neutral-500 hover:text-neutral-900 px-3 py-1.5 rounded-md hover:bg-neutral-100 transition-colors duration-150";
-const DESKTOP_ACTIVE = "text-sm font-medium text-violet-600 font-semibold px-3 py-1.5 rounded-md hover:bg-neutral-100 transition-colors duration-150";
-const MOBILE_LINK = "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 transition-colors duration-150";
-const MOBILE_ACTIVE = "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-semibold bg-violet-50 text-violet-700 transition-colors duration-150";
+const DESKTOP_LINK = "text-sm font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-md hover:bg-muted transition-colors duration-150";
+const DESKTOP_ACTIVE = "text-sm font-medium text-brand font-semibold px-3 py-1.5 rounded-md hover:bg-muted transition-colors duration-150";
+const MOBILE_LINK = "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors duration-150";
+const MOBILE_ACTIVE = "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-semibold bg-brand-subtle text-brand transition-colors duration-150";
 
 export function EmployeeNavbar() {
   const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-neutral-200 z-40 flex items-center px-4 gap-4">
+    <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border z-40 flex items-center px-4 gap-4">
       {/* Mobile hamburger */}
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
         <SheetTrigger asChild>
@@ -70,7 +70,7 @@ export function EmployeeNavbar() {
                 activeProps={{ className: cn(MOBILE_ACTIVE) }}
                 onClick={() => setSheetOpen(false)}
               >
-                <item.icon className="h-4 w-4 shrink-0 text-neutral-400" />
+                <item.icon className="h-4 w-4 shrink-0 text-muted-foreground/70" />
                 {item.label}
               </Link>
             ))}
@@ -101,7 +101,7 @@ export function EmployeeNavbar() {
       {/* Right side */}
       <div className="flex items-center gap-1 ml-auto">
         <Button variant="ghost" size="icon" aria-label="Notifications">
-          <Bell className="h-5 w-5 text-neutral-500" />
+          <Bell className="h-5 w-5 text-muted-foreground" />
         </Button>
         <UserDropdown />
       </div>

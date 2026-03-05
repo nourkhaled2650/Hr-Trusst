@@ -28,19 +28,19 @@ export function AdminNavbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 right-0 h-14 bg-white border-b border-neutral-200 z-30",
+        "fixed top-0 right-0 h-14 bg-white border-b border z-30",
         "flex items-center justify-between px-4",
         "transition-all duration-200 ease-in-out",
         sidebarOpen ? "left-60" : "left-14",
       )}
     >
-      <span className="text-base font-semibold text-neutral-900 max-w-[200px] truncate md:max-w-none">
+      <span className="text-base font-semibold text-foreground max-w-[200px] truncate md:max-w-none">
         {title}
       </span>
 
       <div className="flex items-center gap-1">
         <Button variant="ghost" size="icon" aria-label="Notifications">
-          <Bell className="h-5 w-5 text-neutral-500" />
+          <Bell className="h-5 w-5 text-muted-foreground" />
         </Button>
         <UserDropdown />
       </div>

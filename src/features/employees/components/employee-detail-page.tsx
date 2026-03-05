@@ -178,11 +178,11 @@ export function EmployeeDetailPage({ employeeId }: Props) {
   if (!employee) {
     return (
       <div className="p-6 flex flex-col items-center justify-center py-24">
-        <UserX className="h-12 w-12 text-neutral-300 mb-4" />
-        <p className="text-base font-medium text-neutral-600">
+        <UserX className="h-12 w-12 text-muted-foreground/40 mb-4" />
+        <p className="text-base font-medium text-muted-foreground">
           Employee not found
         </p>
-        <p className="text-sm text-neutral-400 mt-1">
+        <p className="text-sm text-muted-foreground/70 mt-1">
           This employee may have been removed or the link is invalid.
         </p>
         <Button
@@ -204,7 +204,7 @@ export function EmployeeDetailPage({ employeeId }: Props) {
         {/* Breadcrumb */}
         <Link
           to="/admin/employees"
-          className="inline-flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-900 transition-colors"
+          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           <ChevronLeft className="h-4 w-4" />
           Employees
@@ -215,21 +215,21 @@ export function EmployeeDetailPage({ employeeId }: Props) {
           <CardContent className="py-6">
             <div className="flex items-center gap-4">
               <Avatar className="h-16 w-16 shrink-0">
-                <AvatarFallback className="bg-violet-100 text-violet-700 text-xl font-semibold">
+                <AvatarFallback className="bg-brand-muted text-brand text-xl font-semibold">
                   {initials}
                 </AvatarFallback>
               </Avatar>
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h1 className="text-xl font-semibold text-neutral-900">
+                  <h1 className="text-xl font-semibold text-foreground">
                     {fullName || "—"}
                   </h1>
                   <EmployeeTypeBadge type={employee.employeeType} />
                 </div>
-                <span className="text-sm text-neutral-500 font-mono">
+                <span className="text-sm text-muted-foreground font-mono">
                   {employee.employeeCode}
                 </span>
-                <p className="text-sm text-neutral-500 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   {[employee.email, employee.position].filter(Boolean).join(" · ")}
                 </p>
               </div>
@@ -238,7 +238,7 @@ export function EmployeeDetailPage({ employeeId }: Props) {
         </Card>
 
         {/* Section 1 — Statistics placeholder */}
-        <div className="rounded-lg border border-dashed border-neutral-300 bg-neutral-50 px-6 py-10 text-center text-sm text-neutral-400">
+        <div className="rounded-lg border border-dashed border bg-muted/50 px-6 py-10 text-center text-sm text-muted-foreground/70">
           Employee statistics — coming soon
         </div>
 
@@ -261,7 +261,7 @@ export function EmployeeDetailPage({ employeeId }: Props) {
           <div className="flex justify-end pt-2">
             <Button
               type="submit"
-              className="bg-violet-600 hover:bg-violet-700"
+              className="bg-brand hover:bg-brand-hover"
               disabled={isPending || !form.formState.isDirty}
             >
               {isPending ? (
