@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { DatePicker } from "@/components/shared/date-picker";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -71,22 +72,36 @@ export function ProjectInfoForm({
       <div className="grid grid-cols-2 gap-3">
         <Field>
           <FieldLabel htmlFor="startDate">Start Date</FieldLabel>
-          <Input
-            id="startDate"
-            type="date"
-            disabled={disabled}
-            {...register("startDate")}
+          <Controller
+            control={form.control}
+            name="startDate"
+            render={({ field }) => (
+              <DatePicker
+                id="startDate"
+                value={field.value ?? null}
+                onChange={field.onChange}
+                disabled={disabled}
+                placeholder="Pick a date"
+              />
+            )}
           />
           <FieldError errors={[errors.startDate]} />
         </Field>
 
         <Field>
           <FieldLabel htmlFor="endDate">End Date</FieldLabel>
-          <Input
-            id="endDate"
-            type="date"
-            disabled={disabled}
-            {...register("endDate")}
+          <Controller
+            control={form.control}
+            name="endDate"
+            render={({ field }) => (
+              <DatePicker
+                id="endDate"
+                value={field.value ?? null}
+                onChange={field.onChange}
+                disabled={disabled}
+                placeholder="Pick a date"
+              />
+            )}
           />
           <FieldError errors={[errors.endDate]} />
         </Field>

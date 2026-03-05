@@ -1,5 +1,6 @@
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
+import { DatePicker } from "@/components/shared/date-picker";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
@@ -74,14 +75,12 @@ export function EmploymentDetailsSection({ form, disabled }: Props) {
             control={form.control}
             name="hireDate"
             render={({ field }) => (
-              <Input
+              <DatePicker
                 id="hireDate"
-                type="date"
+                value={field.value}
+                onChange={field.onChange}
                 disabled={disabled}
-                value={field.value ?? ""}
-                onChange={(e) =>
-                  field.onChange(e.target.value === "" ? null : e.target.value)
-                }
+                placeholder="Pick a date"
               />
             )}
           />

@@ -6,6 +6,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { UserRole } from "@/types";
 import { authApi } from "../api/auth.api";
 import { loginSchema, type LoginFormValues } from "../schemas/auth.schema";
+import { ROUTES } from "@/constants/routes";
 
 function extractApiErrorMessage(error: unknown): string | null {
   if (error instanceof Error && error.message) return error.message;
@@ -54,9 +55,10 @@ export function useLogin() {
 
     // Only reached after a clean, committed auth state — navigate outside try-catch
     const { user } = useAuthStore.getState();
-    const destination = user?.roles?.includes(UserRole.EMPLOYEE)
-      ? "/"
-      : "/admin";
+    const destination =
+      user?.role === UserRole.EMPLOYEE
+        ? ROUTES.EMPLOYEE_HOME
+        : ROUTES.ADMIN_DASHBOARD;
     void router.navigate({ to: destination, replace: true });
   });
 

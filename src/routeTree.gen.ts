@@ -17,6 +17,7 @@ import { Route as EmployeeProjectsRouteImport } from './routes/_employee/project
 import { Route as EmployeeAttendanceRouteImport } from './routes/_employee/attendance'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AdminAdminIndexRouteImport } from './routes/_admin/admin.index'
+import { Route as AdminAdminSettingsRouteImport } from './routes/_admin/admin.settings'
 import { Route as AdminAdminProjectsRouteImport } from './routes/_admin/admin.projects'
 import { Route as AdminAdminPermissionsRouteImport } from './routes/_admin/admin.permissions'
 import { Route as AdminAdminEmployeesRouteImport } from './routes/_admin/admin.employees'
@@ -61,6 +62,11 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
 const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminSettingsRoute = AdminAdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminAdminProjectsRoute = AdminAdminProjectsRouteImport.update({
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/admin/employees': typeof AdminAdminEmployeesRouteWithChildren
   '/admin/permissions': typeof AdminAdminPermissionsRoute
   '/admin/projects': typeof AdminAdminProjectsRouteWithChildren
+  '/admin/settings': typeof AdminAdminSettingsRoute
   '/admin/': typeof AdminAdminIndexRoute
   '/admin/employees/$employeeId': typeof AdminAdminEmployeesEmployeeIdRoute
   '/admin/projects/$projectId': typeof AdminAdminProjectsProjectIdRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/projects': typeof EmployeeProjectsRoute
   '/admin/attendance': typeof AdminAdminAttendanceRoute
   '/admin/permissions': typeof AdminAdminPermissionsRoute
+  '/admin/settings': typeof AdminAdminSettingsRoute
   '/admin': typeof AdminAdminIndexRoute
   '/admin/employees/$employeeId': typeof AdminAdminEmployeesEmployeeIdRoute
   '/admin/projects/$projectId': typeof AdminAdminProjectsProjectIdRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/_admin/admin/employees': typeof AdminAdminEmployeesRouteWithChildren
   '/_admin/admin/permissions': typeof AdminAdminPermissionsRoute
   '/_admin/admin/projects': typeof AdminAdminProjectsRouteWithChildren
+  '/_admin/admin/settings': typeof AdminAdminSettingsRoute
   '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_admin/admin/employees/$employeeId': typeof AdminAdminEmployeesEmployeeIdRoute
   '/_admin/admin/projects/$projectId': typeof AdminAdminProjectsProjectIdRoute
@@ -165,6 +174,7 @@ export interface FileRouteTypes {
     | '/admin/employees'
     | '/admin/permissions'
     | '/admin/projects'
+    | '/admin/settings'
     | '/admin/'
     | '/admin/employees/$employeeId'
     | '/admin/projects/$projectId'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/admin/attendance'
     | '/admin/permissions'
+    | '/admin/settings'
     | '/admin'
     | '/admin/employees/$employeeId'
     | '/admin/projects/$projectId'
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/_admin/admin/employees'
     | '/_admin/admin/permissions'
     | '/_admin/admin/projects'
+    | '/_admin/admin/settings'
     | '/_admin/admin/'
     | '/_admin/admin/employees/$employeeId'
     | '/_admin/admin/projects/$projectId'
@@ -265,6 +277,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminAdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/settings': {
+      id: '/_admin/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminAdminSettingsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/_admin/admin/projects': {
@@ -357,6 +376,7 @@ interface AdminRouteChildren {
   AdminAdminEmployeesRoute: typeof AdminAdminEmployeesRouteWithChildren
   AdminAdminPermissionsRoute: typeof AdminAdminPermissionsRoute
   AdminAdminProjectsRoute: typeof AdminAdminProjectsRouteWithChildren
+  AdminAdminSettingsRoute: typeof AdminAdminSettingsRoute
   AdminAdminIndexRoute: typeof AdminAdminIndexRoute
 }
 
@@ -365,6 +385,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminAdminEmployeesRoute: AdminAdminEmployeesRouteWithChildren,
   AdminAdminPermissionsRoute: AdminAdminPermissionsRoute,
   AdminAdminProjectsRoute: AdminAdminProjectsRouteWithChildren,
+  AdminAdminSettingsRoute: AdminAdminSettingsRoute,
   AdminAdminIndexRoute: AdminAdminIndexRoute,
 }
 

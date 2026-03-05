@@ -3,6 +3,7 @@ import { Controller } from "react-hook-form";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { DatePicker } from "@/components/shared/date-picker";
 import {
   Card,
   CardContent,
@@ -59,12 +60,12 @@ export function BasicInfoSection({ form, disabled }: Props) {
             control={form.control}
             name="dateOfBirth"
             render={({ field }) => (
-              <Input
+              <DatePicker
                 id="dateOfBirth"
-                type="date"
+                value={field.value}
+                onChange={field.onChange}
                 disabled={disabled}
-                value={field.value ?? ""}
-                onChange={(e) => field.onChange(e.target.value === "" ? null : e.target.value)}
+                placeholder="Pick a date"
               />
             )}
           />

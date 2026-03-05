@@ -16,8 +16,8 @@ export const createProjectSchema = z
       .max(50, "Project code must be at most 50 characters")
       .regex(/^\S+$/, "Code cannot contain spaces"),
     description: z.string().max(2000).optional().or(z.literal("")),
-    startDate: z.string().optional().or(z.literal("")),
-    endDate: z.string().optional().or(z.literal("")),
+    startDate: z.string().nullable().optional(),
+    endDate: z.string().nullable().optional(),
     status: z.enum(["ACTIVE", "COMPLETED", "ON_HOLD", "CANCELLED"]).optional(),
   })
   .refine(
@@ -46,8 +46,8 @@ export const updateProjectSchema = z
       .max(50, "Project code must be at most 50 characters")
       .regex(/^\S+$/, "Code cannot contain spaces"),
     description: z.string().max(2000).optional().or(z.literal("")),
-    startDate: z.string().optional().or(z.literal("")),
-    endDate: z.string().optional().or(z.literal("")),
+    startDate: z.string().nullable().optional(),
+    endDate: z.string().nullable().optional(),
     status: z.enum(["ACTIVE", "COMPLETED", "ON_HOLD", "CANCELLED"]),
   })
   .refine(
@@ -64,26 +64,7 @@ export const updateProjectSchema = z
 // Assign Employee Schema
 // ---------------------------------------------------------------------------
 
-export const assignEmployeeSchema = z
-  .object({
-    employeeId: z.coerce
-      .number()
-      .int()
-      .positive("Please select an employee"),
-    roleInProject: z.string().max(100).optional().or(z.literal("")),
-    allocationPercentage: z.coerce.number().int().min(0).max(100).optional(),
-    assignedDate: z.string().optional().or(z.literal("")),
-    endDate: z.string().optional().or(z.literal("")),
-  })
-  .refine(
-    (data) => {
-      if (data.assignedDate && data.endDate) {
-        return new Date(data.assignedDate) <= new Date(data.endDate);
-      }
-      return true;
-    },
-    {
-      message: "End date must be on or after assigned date",
-      path: ["endDate"],
-    },
-  );
+export const assignEmployeeSchema = z.object({
+  employeeId: z.coerce.number().int().positive("Please select an employee"),
+  roleInProject: z.string().max(100).optional().or(z.literal("")),
+});

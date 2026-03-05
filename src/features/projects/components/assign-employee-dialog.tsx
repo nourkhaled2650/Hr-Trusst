@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -43,14 +43,9 @@ type Props = {
   projectId: number;
 };
 
-const today = new Date().toISOString().split("T")[0];
-
 const DEFAULT_VALUES: AssignEmployeeFormValues = {
   employeeId: 0,
   roleInProject: "",
-  allocationPercentage: undefined,
-  assignedDate: today,
-  endDate: "",
 };
 
 export function AssignEmployeeDialog({ open, onOpenChange, projectId }: Props) {
@@ -69,8 +64,8 @@ export function AssignEmployeeDialog({ open, onOpenChange, projectId }: Props) {
 
   useEffect(() => {
     if (open) {
-      form.reset({ ...DEFAULT_VALUES, assignedDate: new Date().toISOString().split("T")[0] });
-      setApiError(null);
+      form.reset(DEFAULT_VALUES);
+      startTransition(() => setApiError(null));
     }
   }, [open, form]);
 
@@ -175,55 +170,6 @@ export function AssignEmployeeDialog({ open, onOpenChange, projectId }: Props) {
               />
               <FieldError errors={[errors.roleInProject]} />
             </Field>
-
-            <Field>
-              <FieldLabel htmlFor="allocationPercentage">
-                Allocation %
-              </FieldLabel>
-              <Controller
-                control={control}
-                name="allocationPercentage"
-                render={({ field }) => (
-                  <Input
-                    id="allocationPercentage"
-                    type="number"
-                    min="0"
-                    max="100"
-                    disabled={isPending}
-                    value={field.value ?? ""}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      field.onChange(v === "" ? undefined : Number(v));
-                    }}
-                  />
-                )}
-              />
-              <FieldError errors={[errors.allocationPercentage]} />
-            </Field>
-
-            <div className="grid grid-cols-2 gap-3">
-              <Field>
-                <FieldLabel htmlFor="assignedDate">Assigned Date</FieldLabel>
-                <Input
-                  id="assignedDate"
-                  type="date"
-                  disabled={isPending}
-                  {...register("assignedDate")}
-                />
-                <FieldError errors={[errors.assignedDate]} />
-              </Field>
-
-              <Field>
-                <FieldLabel htmlFor="assignEndDate">End Date</FieldLabel>
-                <Input
-                  id="assignEndDate"
-                  type="date"
-                  disabled={isPending}
-                  {...register("endDate")}
-                />
-                <FieldError errors={[errors.endDate]} />
-              </Field>
-            </div>
 
             {apiError && (
               <Alert variant="destructive">

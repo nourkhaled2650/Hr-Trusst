@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Copy, Check, Loader2 } from "lucide-react";
@@ -74,11 +74,13 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
   useEffect(() => {
     if (open) {
       form.reset();
-      setShowPassword(false);
-      setAutoGenerate(false);
-      setGeneratedPassword(null);
-      setCopied(false);
-      setApiError(null);
+      startTransition(() => {
+        setShowPassword(false);
+        setAutoGenerate(false);
+        setGeneratedPassword(null);
+        setCopied(false);
+        setApiError(null);
+      });
     }
   }, [open, form]);
 

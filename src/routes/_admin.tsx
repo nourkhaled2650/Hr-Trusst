@@ -32,8 +32,8 @@ export const Route = createFileRoute("/_admin")({
       throw redirect({ to: "/login" });
     }
     if (
-      !user?.roles.includes(UserRole.SUB_ADMIN) &&
-      !user?.roles.includes(UserRole.SUPER_ADMIN)
+      user?.role !== UserRole.SUB_ADMIN &&
+      user?.role !== UserRole.SUPER_ADMIN
     ) {
       throw redirect({ to: "/" });
     }

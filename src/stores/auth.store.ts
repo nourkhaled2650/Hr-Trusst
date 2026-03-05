@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { PermissionKey, Role, SessionUser } from "@/types";
+import type { PermissionKey, SessionUser } from "@/types";
 import { ROLE_PERMISSIONS } from "@/constants/permissions";
 import type { Permission } from "@/constants/permissions";
 import { UserRole } from "@/types";
@@ -75,10 +75,8 @@ export const useAuthStore = create<AuthStore>()(
       hasPermission: (key: PermissionKey): boolean => {
         const { user } = get();
         if (!user) return false;
-        if (user.roles.includes(UserRole.SUPER_ADMIN)) return true;
-        return user.roles.some((r) =>
-          ROLE_PERMISSIONS[r as Role]?.includes(key as Permission),
-        );
+        if (user.role === UserRole.SUPER_ADMIN) return true;
+        return ROLE_PERMISSIONS[user.role]?.includes(key as Permission);
       },
     }),
     {

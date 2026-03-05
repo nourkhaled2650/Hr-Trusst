@@ -28,9 +28,6 @@ type AssignEmployeePayload = {
   projectId: number;
   employeeId: number;
   roleInProject?: string;
-  allocationPercentage?: number;
-  assignedDate?: string;
-  endDate?: string;
 };
 
 // ---------------------------------------------------------------------------
@@ -118,6 +115,17 @@ export const projectsApi = {
     }
   },
 
+  fetchAssignmentsByProject: async (projectId: number): Promise<Assignment[]> => {
+    const { data } = await apiClient.get<Assignment[]>(
+      `/api/admin/projects/assignments/project/${projectId}`,
+      { _toast: false },
+    );
+    if (data.status !== "success" || data.data === null) {
+      throw new Error(data.message ?? "Failed to fetch assignments");
+    }
+    return data.data;
+  },
+
   assignEmployee: async (
     values: AssignEmployeeFormValues,
     projectId: number,
@@ -128,10 +136,6 @@ export const projectsApi = {
     };
 
     if (values.roleInProject) payload.roleInProject = values.roleInProject;
-    if (values.allocationPercentage !== undefined)
-      payload.allocationPercentage = values.allocationPercentage;
-    if (values.assignedDate) payload.assignedDate = values.assignedDate;
-    if (values.endDate) payload.endDate = values.endDate;
 
     const { data } = await apiClient.post<Assignment>(
       "/api/admin/projects/assignments",

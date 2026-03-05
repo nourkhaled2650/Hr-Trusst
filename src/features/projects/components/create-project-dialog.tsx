@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { DatePicker } from "@/components/shared/date-picker";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { createProjectSchema } from "../schemas/projects.schema";
@@ -62,13 +63,17 @@ export function CreateProjectDialog({ open, onOpenChange }: Props) {
     defaultValues: DEFAULT_VALUES,
   });
 
-  const { register, formState: { errors }, control } = form;
+  const {
+    register,
+    formState: { errors },
+    control,
+  } = form;
 
   // Reset form when dialog opens
   useEffect(() => {
     if (open) {
       form.reset(DEFAULT_VALUES);
-      setApiError(null);
+      startTransition(() => setApiError(null));
     }
   }, [open, form]);
 
@@ -174,22 +179,36 @@ export function CreateProjectDialog({ open, onOpenChange }: Props) {
             <div className="grid grid-cols-2 gap-3">
               <Field>
                 <FieldLabel htmlFor="startDate">Start Date</FieldLabel>
-                <Input
-                  id="startDate"
-                  type="date"
-                  disabled={isPending}
-                  {...register("startDate")}
+                <Controller
+                  control={control}
+                  name="startDate"
+                  render={({ field }) => (
+                    <DatePicker
+                      id="startDate"
+                      value={field.value ?? null}
+                      onChange={field.onChange}
+                      disabled={isPending}
+                      placeholder="Pick a date"
+                    />
+                  )}
                 />
                 <FieldError errors={[errors.startDate]} />
               </Field>
 
               <Field>
                 <FieldLabel htmlFor="endDate">End Date</FieldLabel>
-                <Input
-                  id="endDate"
-                  type="date"
-                  disabled={isPending}
-                  {...register("endDate")}
+                <Controller
+                  control={control}
+                  name="endDate"
+                  render={({ field }) => (
+                    <DatePicker
+                      id="endDate"
+                      value={field.value ?? null}
+                      onChange={field.onChange}
+                      disabled={isPending}
+                      placeholder="Pick a date"
+                    />
+                  )}
                 />
                 <FieldError errors={[errors.endDate]} />
               </Field>

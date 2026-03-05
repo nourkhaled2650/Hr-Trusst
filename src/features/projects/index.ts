@@ -8,6 +8,7 @@ export { useCreateProject } from "./hooks/use-create-project";
 export { useUpdateProject } from "./hooks/use-update-project";
 export { useCloseProject } from "./hooks/use-close-project";
 export { useAssignEmployee } from "./hooks/use-assign-employee";
+export { useProjectAssignments, PROJECT_ASSIGNMENTS_QUERY_KEY } from "./hooks/use-project-assignments";
 
 // Components
 export { ProjectTable } from "./components/project-table";

@@ -1,9 +1,14 @@
 import { useState } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { ChevronDown, ChevronRight, Info, AlertTriangle } from "lucide-react";
+import { ChevronDown, ChevronRight, Info, AlertTriangle, Clock } from "lucide-react";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupInput,
+  InputGroupAddon,
+} from "@/components/ui/input-group";
 import {
   Card,
   CardContent,
@@ -150,17 +155,23 @@ export function PolicyOverridesSection({ form, disabled }: Props) {
                   control={form.control}
                   name="configurationException.workingDayStartTime"
                   render={({ field }) => (
-                    <Input
-                      id="workingDayStartTime"
-                      type="time"
-                      step="60"
-                      disabled={disabled}
-                      value={field.value ?? ""}
-                      onChange={(e) => {
-                        const v = e.target.value;
-                        field.onChange(v === "" ? null : v);
-                      }}
-                    />
+                    <InputGroup className="rounded-md">
+                      <InputGroupInput
+                        id="workingDayStartTime"
+                        type="time"
+                        step="60"
+                        disabled={disabled}
+                        className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                        value={field.value ?? ""}
+                        onChange={(e) => {
+                          const v = e.target.value;
+                          field.onChange(v === "" ? null : v);
+                        }}
+                      />
+                      <InputGroupAddon align="inline-end">
+                        <Clock className="text-muted-foreground" />
+                      </InputGroupAddon>
+                    </InputGroup>
                   )}
                 />
                 <FieldError errors={[configErrors?.workingDayStartTime]} />

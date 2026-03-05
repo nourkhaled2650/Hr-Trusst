@@ -48,7 +48,7 @@ export function AdminSidebar() {
   const canViewEmployees = useHasPermission(PERMISSIONS.VIEW_EMPLOYEES);
   const canViewPayroll = useHasPermission(PERMISSIONS.VIEW_PAYROLL);
   const canManageSettings = useHasPermission(PERMISSIONS.MANAGE_SETTINGS);
-  const isSuperAdmin = user?.roles.includes(UserRole.SUPER_ADMIN) ?? false;
+  const isSuperAdmin = user?.role === UserRole.SUPER_ADMIN;
 
   const mainNav: NavItem[] = [
     {

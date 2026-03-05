@@ -35,7 +35,7 @@ export interface Assignment {
   roleInProject: string | null;
   allocationPercentage: number | null;
   assignedDate: string | null; // ISO date YYYY-MM-DD
-  isActive: boolean;
+  isActive: boolean | null;
 }
 
 // ---------------------------------------------------------------------------

@@ -13,8 +13,8 @@ export type LeaveId = Brand<number, "LeaveId">;
 // Roles — kept as a plain union and a const-object pattern for exhaustiveness
 // ---------------------------------------------------------------------------
 export const UserRole = {
-  EMPLOYEE: "employee",
-  SUB_ADMIN: "sub_admin",
+  EMPLOYEE: "EMPLOYEE",
+  SUB_ADMIN: "SUB_ADMIN",
   SUPER_ADMIN: "ADMIN",
 } as const;
 
@@ -34,7 +34,7 @@ export interface SessionUser {
   email: string;
   isActive: boolean;
   createdAt: string; // ISO-8601
-  roles: Role[];
+  role: Role;
 }
 
 /**
