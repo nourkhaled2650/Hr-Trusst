@@ -28,7 +28,7 @@ export function AdminNavbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 right-0 h-14 bg-white border-b border z-30",
+        "fixed top-0 right-0 h-14 bg-card border-b border z-30",
         "flex items-center justify-between px-4",
         "transition-all duration-200 ease-in-out",
         sidebarOpen ? "left-60" : "left-14",

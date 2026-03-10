@@ -81,52 +81,20 @@ export function mapEmployeeToFormValues(
 // Build update payload — strip empty strings, convert types
 // ---------------------------------------------------------------------------
 
-type UpdatePayload = {
-  firstName?: string;
-  lastName?: string;
-  phoneNumber?: string;
-  address?: string;
-  position?: string;
-  basicSalary?: number | null;
-  dateOfBirth?: string | null;
-  hireDate?: string | null;
-  employeeType?: "FULL_TIME" | "PART_TIME" | null;
-  configurationException?: {
+export function buildUpdatePayload(values: UpdateEmployeeFormValues) {
+  const ce = values.configurationException;
+
+  let configurationException: {
     normalOvertimeRate?: number | null;
     specialOvertimeRate?: number | null;
     standardWorkingHours?: number | null;
     lateBalanceLimit?: number | null;
     leaveBalanceLimit?: number | null;
     workingDayStartTime?: string | null;
-  } | null;
-};
+  } | null = null;
 
-export function buildUpdatePayload(
-  values: UpdateEmployeeFormValues,
-): UpdatePayload {
-  const payload: UpdatePayload = {};
-
-  if (values.firstName !== undefined)
-    payload.firstName = values.firstName || undefined;
-  if (values.lastName !== undefined)
-    payload.lastName = values.lastName || undefined;
-  if (values.phoneNumber !== undefined)
-    payload.phoneNumber = values.phoneNumber || undefined;
-  if (values.address !== undefined)
-    payload.address = values.address || undefined;
-  if (values.position !== undefined)
-    payload.position = values.position || undefined;
-
-  payload.basicSalary = values.basicSalary ?? null;
-  payload.dateOfBirth = values.dateOfBirth ?? null;
-  payload.hireDate = values.hireDate ?? null;
-  payload.employeeType = values.employeeType ?? null;
-
-  const ce = values.configurationException;
-  if (ce === null || ce === undefined) {
-    payload.configurationException = null;
-  } else {
-    const cePayload: UpdatePayload["configurationException"] = {
+  if (ce !== null && ce !== undefined) {
+    const cePayload = {
       normalOvertimeRate: ce.normalOvertimeRate ?? null,
       specialOvertimeRate: ce.specialOvertimeRate ?? null,
       standardWorkingHours: ce.standardWorkingHours ?? null,
@@ -137,11 +105,21 @@ export function buildUpdatePayload(
         ? `${ce.workingDayStartTime}:00`
         : null,
     };
-
     // If all fields are null, send configurationException: null
     const allNull = Object.values(cePayload).every((v) => v === null);
-    payload.configurationException = allNull ? null : cePayload;
+    configurationException = allNull ? null : cePayload;
   }
 
-  return payload;
+  return {
+    firstName: values.firstName || undefined,
+    lastName: values.lastName || undefined,
+    phoneNumber: values.phoneNumber || undefined,
+    address: values.address || undefined,
+    position: values.position || undefined,
+    basicSalary: values.basicSalary ?? null,
+    dateOfBirth: values.dateOfBirth ?? null,
+    hireDate: values.hireDate ?? null,
+    employeeType: values.employeeType ?? null,
+    configurationException,
+  };
 }

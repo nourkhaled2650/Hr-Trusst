@@ -36,6 +36,7 @@ import { BasicInfoSection } from "./employee-form-sections/basic-info-section";
 import { EmploymentDetailsSection } from "./employee-form-sections/employment-details-section";
 import { CompensationSection } from "./employee-form-sections/compensation-section";
 import { PolicyOverridesSection } from "./employee-form-sections/policy-overrides-section";
+import { EmployeeWorkingDaysTable } from "@/features/attendance";
 
 type Props = {
   employeeId: string;
@@ -153,7 +154,7 @@ export function EmployeeDetailPage({ employeeId }: Props) {
 
   if (isLoading) {
     return (
-      <div className="p-6">
+      <div className="container py-6">
         <div className="mb-4">
           <Skeleton className="h-5 w-28" />
         </div>
@@ -164,7 +165,7 @@ export function EmployeeDetailPage({ employeeId }: Props) {
 
   if (isError) {
     return (
-      <div className="p-6">
+      <div className="container py-6">
         <Alert variant="destructive" className="max-w-lg">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
@@ -177,7 +178,7 @@ export function EmployeeDetailPage({ employeeId }: Props) {
 
   if (!employee) {
     return (
-      <div className="p-6 flex flex-col items-center justify-center py-24">
+      <div className="container py-6 flex flex-col items-center justify-center min-h-64">
         <UserX className="h-12 w-12 text-muted-foreground/40 mb-4" />
         <p className="text-base font-medium text-muted-foreground">
           Employee not found
@@ -200,7 +201,7 @@ export function EmployeeDetailPage({ employeeId }: Props) {
   const initials = getInitials(employee);
   return (
     <>
-      <div className="p-6 space-y-4">
+      <div className="container py-6 space-y-4">
         {/* Breadcrumb */}
         <Link
           to="/admin/employees"
@@ -237,9 +238,10 @@ export function EmployeeDetailPage({ employeeId }: Props) {
           </CardContent>
         </Card>
 
-        {/* Section 1 — Statistics placeholder */}
-        <div className="rounded-lg border border-dashed border bg-muted/50 px-6 py-10 text-center text-sm text-muted-foreground/70">
-          Employee statistics — coming soon
+        {/* Section 1 — Working Days (attendance review) */}
+        <div className="rounded-lg border bg-card p-6 space-y-3">
+          <h2 className="text-base font-semibold">Working Days</h2>
+          <EmployeeWorkingDaysTable employeeId={Number(employee.employeeId)} />
         </div>
 
         {/* Section 2 — Edit form */}
@@ -261,7 +263,6 @@ export function EmployeeDetailPage({ employeeId }: Props) {
           <div className="flex justify-end pt-2">
             <Button
               type="submit"
-              className="bg-brand hover:bg-brand-hover"
               disabled={isPending || !form.formState.isDirty}
             >
               {isPending ? (

@@ -22,7 +22,7 @@ function AdminConfigPage() {
   const historyQuery = useAllConfigs();
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="container py-6 space-y-6">
       {/* Page header */}
       <div>
         <h1 className="text-2xl font-semibold text-foreground">

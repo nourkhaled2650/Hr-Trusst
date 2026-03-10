@@ -188,7 +188,6 @@ export function AssignEmployeeDialog({ open, onOpenChange, projectId }: Props) {
               </Button>
               <Button
                 type="submit"
-                className="bg-brand hover:bg-brand-hover"
                 disabled={isPending || employeesLoading}
               >
                 {isPending ? (

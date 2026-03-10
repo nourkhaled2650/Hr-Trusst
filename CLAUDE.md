@@ -11,8 +11,8 @@ React + TypeScript frontend for the Tce Trusst HR & Payroll system. Greenfield �
 
 ## Primary Agents for This Repo
 
-- `frontend-developer` — builds React/TS code
 - `uiux-designer` — designs screens and flows before frontend builds
+- `frontend-developer` — builds React/TS code
 - `qa-testing` — writes tests after features are complete and manually verified
 - `security` — audits completed features
 
@@ -51,15 +51,15 @@ src/
 
 ## Roles & Layouts
 
-- 3 roles: Employee, Sub-Admin, Super Admin
+- 3 roles: Employee, Sub-Admin, ADMIN
 - 2 layouts: Employee (`_employee/`) and Admin (`_admin/`)
-- Sub-Admin: admin layout, some elements hidden based on permissions
+- Sub-Admin: admin layout, some elements hidden based on permissions handled frontend wise
 - Hidden = not rendered. Never disabled. Never locked.
 - Permission check: always via `useHasPermission(PERMISSIONS.X)` hook
 
 ## The Golden Rule
 
-Never hardcode any business value — not hours, not rates, not thresholds. Always fetch from config API and display dynamically.
+Never hardcode any business value — not hours, not rates, not thresholds.
 
 ## Prerequisites Before Building Anything
 
@@ -80,7 +80,7 @@ Never hardcode any business value — not hours, not rates, not thresholds. Alwa
 - No server data in Zustand
 - No hardcoded business values
 - Components max 120 lines of JSX
-- Schema first — type derived from Zod schema, never written manually
+- Schema first — every form has a Zod schema. Both the form values type AND its corresponding API payload type must be derived from that schema via `z.infer<>`. Never write a separate manual payload type alongside an existing form schema.
 - Features import only through `index.ts` — no internal cross-feature imports
 - TypeScript must compile clean — zero errors
 

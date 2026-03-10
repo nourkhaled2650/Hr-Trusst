@@ -8,6 +8,10 @@ export type EmployeeId = Brand<number, "EmployeeId">;
 export type ProjectId = Brand<number, "ProjectId">;
 export type SessionId = Brand<string, "SessionId">;
 export type LeaveId = Brand<number, "LeaveId">;
+export type AttendanceId = Brand<number, "AttendanceId">;
+export type AttendanceLogId = Brand<number, "AttendanceLogId">;
+export type ProjectHourLogId = Brand<number, "ProjectHourLogId">;
+export type AssignmentId = Brand<number, "AssignmentId">;
 
 // ---------------------------------------------------------------------------
 // Roles — kept as a plain union and a const-object pattern for exhaustiveness
@@ -27,6 +31,7 @@ export type Role = (typeof UserRole)[keyof typeof UserRole];
 /**
  * Matches the backend `GET /api/auth/session` response exactly.
  * Backend commit f509656 added role to the session response.
+ * Backend commit 5c02c2f added employeeId to the session response.
  */
 export interface SessionUser {
   userId: number;
@@ -35,6 +40,14 @@ export interface SessionUser {
   isActive: boolean;
   createdAt: string; // ISO-8601
   role: Role;
+  /**
+   * The employee record ID linked to this user account.
+   * Populated by the backend as of commit 5c02c2f.
+   * Null for admin users who have no linked Employee record.
+   * Any feature that requires employeeId MUST check for null and show
+   * a graceful degraded state instead of throwing.
+   */
+  employeeId: number | null;
 }
 
 /**
@@ -43,13 +56,13 @@ export interface SessionUser {
  * This is what the auth store holds.
  */
 
-/**
- * Legacy alias kept temporarily so that `_admin.tsx` and `_employee.tsx`
- * route guards compile without immediate breakage. Remove once those
- * layouts are updated to reference AppUser directly.
- *
- * @deprecated Use AppUser instead.
- */
+// /**
+//  * Legacy alias kept temporarily so that `_admin.tsx` and `_employee.tsx`
+//  * route guards compile without immediate breakage. Remove once those
+//  * layouts are updated to reference AppUser directly.
+//  *
+//  * @deprecated Use AppUser instead.
+//  */
 // export type User = SessionUser;
 
 // ---------------------------------------------------------------------------

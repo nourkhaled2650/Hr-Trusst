@@ -1,34 +1,11 @@
 import { apiClient } from "@/lib/axios";
 import type { Project, Assignment } from "../types/projects.types";
-import type { CreateProjectFormValues, AssignEmployeeFormValues } from "../types/projects.types";
-
-// ---------------------------------------------------------------------------
-// Request payload types
-// ---------------------------------------------------------------------------
-
-type CreateProjectPayload = {
-  projectName: string;
-  projectCode: string;
-  description?: string;
-  startDate?: string | null;
-  endDate?: string | null;
-  status?: string;
-};
-
-type UpdateProjectPayload = {
-  projectName: string;
-  projectCode: string;
-  description?: string;
-  startDate?: string | null;
-  endDate?: string | null;
-  status: string;
-};
-
-type AssignEmployeePayload = {
-  projectId: number;
-  employeeId: number;
-  roleInProject?: string;
-};
+import type {
+  CreateProjectFormValues,
+  UpdateProjectFormValues,
+  AssignEmployeeFormValues,
+} from "../types/projects.types";
+import { buildProjectPayload } from "../utils/projects.utils";
 
 // ---------------------------------------------------------------------------
 // API functions
@@ -57,19 +34,16 @@ export const projectsApi = {
   },
 
   createProject: async (values: CreateProjectFormValues): Promise<Project> => {
-    const payload: CreateProjectPayload = {
+    const body = {
       projectName: values.projectName,
       projectCode: values.projectCode,
       status: values.status ?? "ACTIVE",
+      description: values.description || undefined,
+      startDate: values.startDate || null,
+      endDate: values.endDate || null,
     };
 
-    if (values.description) payload.description = values.description;
-    if (values.startDate) payload.startDate = values.startDate;
-    else payload.startDate = null;
-    if (values.endDate) payload.endDate = values.endDate;
-    else payload.endDate = null;
-
-    const { data } = await apiClient.post<Project>("/api/projects", payload, {
+    const { data } = await apiClient.post<Project>("/api/projects", body, {
       _toast: false,
     });
     if (data.status !== "success" || data.data === null) {
@@ -80,11 +54,11 @@ export const projectsApi = {
 
   updateProject: async (
     projectId: number,
-    payload: UpdateProjectPayload,
+    values: UpdateProjectFormValues,
   ): Promise<Project> => {
     const { data } = await apiClient.put<Project>(
       `/api/projects/${projectId}`,
-      payload,
+      buildProjectPayload(values),
       { _toast: false },
     );
     if (data.status !== "success" || data.data === null) {
@@ -130,16 +104,15 @@ export const projectsApi = {
     values: AssignEmployeeFormValues,
     projectId: number,
   ): Promise<Assignment> => {
-    const payload: AssignEmployeePayload = {
+    const body = {
       projectId,
       employeeId: values.employeeId,
+      roleInProject: values.roleInProject || undefined,
     };
-
-    if (values.roleInProject) payload.roleInProject = values.roleInProject;
 
     const { data } = await apiClient.post<Assignment>(
       "/api/admin/projects/assignments",
-      payload,
+      body,
       { _toast: false },
     );
     if (data.status !== "success" || data.data === null) {

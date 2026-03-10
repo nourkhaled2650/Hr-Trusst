@@ -6,7 +6,7 @@ import { EmployeeNavbar } from "@/components/shared/EmployeeNavbar";
 const EmployeeLayout = () => (
   <div className="min-h-screen bg-muted/50">
     <EmployeeNavbar />
-    <main className="pt-14 min-h-screen">
+    <main className="container mx-auto pt-14 min-h-screen">
       <Outlet />
     </main>
   </div>

@@ -13,7 +13,7 @@ export const configApi = {
   fetchLatest: async (): Promise<PayrollSettings | null> => {
     try {
       const { data } = await apiClient.get<PayrollSettings>(`${BASE}/latest`);
-      return data.data;
+      return data.data ?? null;
     } catch (err) {
       if (isAxiosError(err) && err.response?.status === 404) {
         return null;

@@ -22,29 +22,13 @@ export function mapProjectToFormValues(
 // Build create/update API payload — strip empty strings
 // ---------------------------------------------------------------------------
 
-export type ProjectPayload = {
-  projectName: string;
-  projectCode: string;
-  description?: string;
-  startDate?: string | null;
-  endDate?: string | null;
-  status: string;
-};
-
-export function buildProjectPayload(
-  values: UpdateProjectFormValues,
-): ProjectPayload {
-  const payload: ProjectPayload = {
+export function buildProjectPayload(values: UpdateProjectFormValues) {
+  return {
     projectName: values.projectName,
     projectCode: values.projectCode,
     status: values.status,
     startDate: values.startDate || null,
     endDate: values.endDate || null,
+    description: values.description || undefined,
   };
-
-  if (values.description) {
-    payload.description = values.description;
-  }
-
-  return payload;
 }

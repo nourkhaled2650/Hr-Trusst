@@ -1,11 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-const AttendancePage = () => (
-  <div className="p-8">
-    <h1 className="text-2xl font-semibold">Attendance</h1>
-  </div>
-);
+// ---------------------------------------------------------------------------
+// Attendance layout route
+// Route: /_employee/attendance
+// Acts as a thin parent so that attendance/ and attendance/log share the same
+// parent route. All content lives in attendance.index.tsx and attendance.log.tsx
+// ---------------------------------------------------------------------------
 
 export const Route = createFileRoute("/_employee/attendance")({
-  component: AttendancePage,
+  component: Outlet,
 });

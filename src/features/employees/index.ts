@@ -28,4 +28,4 @@ export type {
 } from "./types/employee.types";
 
 // Utils
-export { generateSecurePassword, getFullName, getInitials, mapEmployeeToFormValues, buildUpdatePayload } from "./utils/employees.utils";
+export { generateSecurePassword, getFullName, getInitials, mapEmployeeToFormValues } from "./utils/employees.utils";

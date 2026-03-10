@@ -110,7 +110,7 @@ export function AdminSidebar() {
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 h-screen bg-white border-r border flex flex-col z-40",
+        "fixed top-0 left-0 h-screen bg-card border-r border flex flex-col z-40",
         "transition-all duration-200 ease-in-out",
         sidebarOpen ? "w-60" : "w-14",
       )}
@@ -138,7 +138,7 @@ export function AdminSidebar() {
       {/* Collapse toggle */}
       <button
         onClick={toggleSidebar}
-        className="absolute -right-3 top-[68px] z-50 h-6 w-6 rounded-full bg-white border border shadow-sm flex items-center justify-center hover:bg-muted/50"
+        className="absolute -right-3 top-[68px] z-50 h-6 w-6 rounded-full bg-card border shadow-sm flex items-center justify-center hover:bg-muted/50"
         aria-label={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
       >
         {sidebarOpen ? (
@@ -174,7 +174,7 @@ export function AdminSidebar() {
         {sidebarOpen ? (
           <div className="flex items-center gap-2 rounded-md p-2">
             <Avatar className="h-8 w-8 shrink-0">
-              <AvatarFallback className="bg-brand text-white text-xs font-semibold">
+              <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -182,13 +182,15 @@ export function AdminSidebar() {
               <p className="text-sm font-medium text-foreground truncate">
                 {user?.username}
               </p>
-              <p className="text-xs text-muted-foreground/70 truncate">{user?.email}</p>
+              <p className="text-xs text-muted-foreground/70 truncate">
+                {user?.email}
+              </p>
             </div>
           </div>
         ) : (
           <div className="flex justify-center py-1">
             <Avatar className="h-8 w-8">
-              <AvatarFallback className="bg-brand text-white text-xs font-semibold">
+              <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
                 {initials}
               </AvatarFallback>
             </Avatar>

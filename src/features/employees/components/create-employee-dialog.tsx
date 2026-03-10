@@ -365,7 +365,6 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
               </Button>
               <Button
                 type="submit"
-                className="bg-brand hover:bg-brand-hover"
                 disabled={isPending}
               >
                 {isPending ? (

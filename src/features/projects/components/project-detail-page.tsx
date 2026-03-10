@@ -143,7 +143,7 @@ export function ProjectDetailPage({ projectId }: Props) {
 
   if (isLoading) {
     return (
-      <div className="p-6">
+      <div className="container py-6">
         <div className="mb-4">
           <Skeleton className="h-5 w-28" />
         </div>
@@ -154,7 +154,7 @@ export function ProjectDetailPage({ projectId }: Props) {
 
   if (isError || !project) {
     return (
-      <div className="p-6 flex flex-col items-center justify-center py-24 text-center">
+      <div className="container py-6 flex flex-col items-center justify-center min-h-64 text-center">
         <FolderX className="h-12 w-12 text-muted-foreground/40 mb-4" />
         <p className="text-base font-medium text-muted-foreground">
           Project not found
@@ -177,7 +177,7 @@ export function ProjectDetailPage({ projectId }: Props) {
 
   return (
     <>
-      <div className="p-6 space-y-4">
+      <div className="container py-6 space-y-4">
         {/* Breadcrumb */}
         <Link
           to="/admin/projects"
@@ -238,7 +238,6 @@ export function ProjectDetailPage({ projectId }: Props) {
               <div className="flex justify-end pt-6">
                 <Button
                   type="submit"
-                  className="bg-brand hover:bg-brand-hover"
                   disabled={isPending || !form.formState.isDirty}
                 >
                   {isPending ? (
@@ -273,7 +272,7 @@ export function ProjectDetailPage({ projectId }: Props) {
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isClosing}>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-destructive hover:bg-destructive text-white"
+              className="bg-destructive hover:bg-destructive text-destructive-foreground"
               onClick={() => void handleCloseProject()}
               disabled={isClosing}
             >

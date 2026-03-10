@@ -14,9 +14,12 @@ import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as EmployeeIndexRouteImport } from './routes/_employee/index'
 import { Route as EmployeeProjectsRouteImport } from './routes/_employee/projects'
+import { Route as EmployeeLeaveRouteImport } from './routes/_employee/leave'
 import { Route as EmployeeAttendanceRouteImport } from './routes/_employee/attendance'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as EmployeeAttendanceIndexRouteImport } from './routes/_employee/attendance.index'
 import { Route as AdminAdminIndexRouteImport } from './routes/_admin/admin.index'
+import { Route as EmployeeAttendanceLogRouteImport } from './routes/_employee/attendance.log'
 import { Route as AdminAdminSettingsRouteImport } from './routes/_admin/admin.settings'
 import { Route as AdminAdminProjectsRouteImport } from './routes/_admin/admin.projects'
 import { Route as AdminAdminPermissionsRouteImport } from './routes/_admin/admin.permissions'
@@ -49,6 +52,11 @@ const EmployeeProjectsRoute = EmployeeProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => EmployeeRoute,
 } as any)
+const EmployeeLeaveRoute = EmployeeLeaveRouteImport.update({
+  id: '/leave',
+  path: '/leave',
+  getParentRoute: () => EmployeeRoute,
+} as any)
 const EmployeeAttendanceRoute = EmployeeAttendanceRouteImport.update({
   id: '/attendance',
   path: '/attendance',
@@ -59,10 +67,20 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AuthRoute,
 } as any)
+const EmployeeAttendanceIndexRoute = EmployeeAttendanceIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EmployeeAttendanceRoute,
+} as any)
 const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
   getParentRoute: () => AdminRoute,
+} as any)
+const EmployeeAttendanceLogRoute = EmployeeAttendanceLogRouteImport.update({
+  id: '/log',
+  path: '/log',
+  getParentRoute: () => EmployeeAttendanceRoute,
 } as any)
 const AdminAdminSettingsRoute = AdminAdminSettingsRouteImport.update({
   id: '/admin/settings',
@@ -116,14 +134,17 @@ const AdminAdminEmployeesEmployeeIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof EmployeeIndexRoute
   '/login': typeof AuthLoginRoute
-  '/attendance': typeof EmployeeAttendanceRoute
+  '/attendance': typeof EmployeeAttendanceRouteWithChildren
+  '/leave': typeof EmployeeLeaveRoute
   '/projects': typeof EmployeeProjectsRoute
   '/admin/attendance': typeof AdminAdminAttendanceRoute
   '/admin/employees': typeof AdminAdminEmployeesRouteWithChildren
   '/admin/permissions': typeof AdminAdminPermissionsRoute
   '/admin/projects': typeof AdminAdminProjectsRouteWithChildren
   '/admin/settings': typeof AdminAdminSettingsRoute
+  '/attendance/log': typeof EmployeeAttendanceLogRoute
   '/admin/': typeof AdminAdminIndexRoute
+  '/attendance/': typeof EmployeeAttendanceIndexRoute
   '/admin/employees/$employeeId': typeof AdminAdminEmployeesEmployeeIdRoute
   '/admin/projects/$projectId': typeof AdminAdminProjectsProjectIdRoute
   '/admin/employees/': typeof AdminAdminEmployeesIndexRoute
@@ -132,12 +153,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof EmployeeIndexRoute
   '/login': typeof AuthLoginRoute
-  '/attendance': typeof EmployeeAttendanceRoute
+  '/leave': typeof EmployeeLeaveRoute
   '/projects': typeof EmployeeProjectsRoute
   '/admin/attendance': typeof AdminAdminAttendanceRoute
   '/admin/permissions': typeof AdminAdminPermissionsRoute
   '/admin/settings': typeof AdminAdminSettingsRoute
+  '/attendance/log': typeof EmployeeAttendanceLogRoute
   '/admin': typeof AdminAdminIndexRoute
+  '/attendance': typeof EmployeeAttendanceIndexRoute
   '/admin/employees/$employeeId': typeof AdminAdminEmployeesEmployeeIdRoute
   '/admin/projects/$projectId': typeof AdminAdminProjectsProjectIdRoute
   '/admin/employees': typeof AdminAdminEmployeesIndexRoute
@@ -149,7 +172,8 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_employee': typeof EmployeeRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
-  '/_employee/attendance': typeof EmployeeAttendanceRoute
+  '/_employee/attendance': typeof EmployeeAttendanceRouteWithChildren
+  '/_employee/leave': typeof EmployeeLeaveRoute
   '/_employee/projects': typeof EmployeeProjectsRoute
   '/_employee/': typeof EmployeeIndexRoute
   '/_admin/admin/attendance': typeof AdminAdminAttendanceRoute
@@ -157,7 +181,9 @@ export interface FileRoutesById {
   '/_admin/admin/permissions': typeof AdminAdminPermissionsRoute
   '/_admin/admin/projects': typeof AdminAdminProjectsRouteWithChildren
   '/_admin/admin/settings': typeof AdminAdminSettingsRoute
+  '/_employee/attendance/log': typeof EmployeeAttendanceLogRoute
   '/_admin/admin/': typeof AdminAdminIndexRoute
+  '/_employee/attendance/': typeof EmployeeAttendanceIndexRoute
   '/_admin/admin/employees/$employeeId': typeof AdminAdminEmployeesEmployeeIdRoute
   '/_admin/admin/projects/$projectId': typeof AdminAdminProjectsProjectIdRoute
   '/_admin/admin/employees/': typeof AdminAdminEmployeesIndexRoute
@@ -169,13 +195,16 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/attendance'
+    | '/leave'
     | '/projects'
     | '/admin/attendance'
     | '/admin/employees'
     | '/admin/permissions'
     | '/admin/projects'
     | '/admin/settings'
+    | '/attendance/log'
     | '/admin/'
+    | '/attendance/'
     | '/admin/employees/$employeeId'
     | '/admin/projects/$projectId'
     | '/admin/employees/'
@@ -184,12 +213,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
-    | '/attendance'
+    | '/leave'
     | '/projects'
     | '/admin/attendance'
     | '/admin/permissions'
     | '/admin/settings'
+    | '/attendance/log'
     | '/admin'
+    | '/attendance'
     | '/admin/employees/$employeeId'
     | '/admin/projects/$projectId'
     | '/admin/employees'
@@ -201,6 +232,7 @@ export interface FileRouteTypes {
     | '/_employee'
     | '/_auth/login'
     | '/_employee/attendance'
+    | '/_employee/leave'
     | '/_employee/projects'
     | '/_employee/'
     | '/_admin/admin/attendance'
@@ -208,7 +240,9 @@ export interface FileRouteTypes {
     | '/_admin/admin/permissions'
     | '/_admin/admin/projects'
     | '/_admin/admin/settings'
+    | '/_employee/attendance/log'
     | '/_admin/admin/'
+    | '/_employee/attendance/'
     | '/_admin/admin/employees/$employeeId'
     | '/_admin/admin/projects/$projectId'
     | '/_admin/admin/employees/'
@@ -258,6 +292,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmployeeProjectsRouteImport
       parentRoute: typeof EmployeeRoute
     }
+    '/_employee/leave': {
+      id: '/_employee/leave'
+      path: '/leave'
+      fullPath: '/leave'
+      preLoaderRoute: typeof EmployeeLeaveRouteImport
+      parentRoute: typeof EmployeeRoute
+    }
     '/_employee/attendance': {
       id: '/_employee/attendance'
       path: '/attendance'
@@ -272,12 +313,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_employee/attendance/': {
+      id: '/_employee/attendance/'
+      path: '/'
+      fullPath: '/attendance/'
+      preLoaderRoute: typeof EmployeeAttendanceIndexRouteImport
+      parentRoute: typeof EmployeeAttendanceRoute
+    }
     '/_admin/admin/': {
       id: '/_admin/admin/'
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminAdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/_employee/attendance/log': {
+      id: '/_employee/attendance/log'
+      path: '/log'
+      fullPath: '/attendance/log'
+      preLoaderRoute: typeof EmployeeAttendanceLogRouteImport
+      parentRoute: typeof EmployeeAttendanceRoute
     }
     '/_admin/admin/settings': {
       id: '/_admin/admin/settings'
@@ -401,14 +456,29 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface EmployeeAttendanceRouteChildren {
+  EmployeeAttendanceLogRoute: typeof EmployeeAttendanceLogRoute
+  EmployeeAttendanceIndexRoute: typeof EmployeeAttendanceIndexRoute
+}
+
+const EmployeeAttendanceRouteChildren: EmployeeAttendanceRouteChildren = {
+  EmployeeAttendanceLogRoute: EmployeeAttendanceLogRoute,
+  EmployeeAttendanceIndexRoute: EmployeeAttendanceIndexRoute,
+}
+
+const EmployeeAttendanceRouteWithChildren =
+  EmployeeAttendanceRoute._addFileChildren(EmployeeAttendanceRouteChildren)
+
 interface EmployeeRouteChildren {
-  EmployeeAttendanceRoute: typeof EmployeeAttendanceRoute
+  EmployeeAttendanceRoute: typeof EmployeeAttendanceRouteWithChildren
+  EmployeeLeaveRoute: typeof EmployeeLeaveRoute
   EmployeeProjectsRoute: typeof EmployeeProjectsRoute
   EmployeeIndexRoute: typeof EmployeeIndexRoute
 }
 
 const EmployeeRouteChildren: EmployeeRouteChildren = {
-  EmployeeAttendanceRoute: EmployeeAttendanceRoute,
+  EmployeeAttendanceRoute: EmployeeAttendanceRouteWithChildren,
+  EmployeeLeaveRoute: EmployeeLeaveRoute,
   EmployeeProjectsRoute: EmployeeProjectsRoute,
   EmployeeIndexRoute: EmployeeIndexRoute,
 }

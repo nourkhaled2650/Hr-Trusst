@@ -132,7 +132,7 @@ export function ProjectTable({
             Create your first project to get started.
           </p>
           <Button
-            className="mt-6 bg-brand hover:bg-brand-hover"
+            className="mt-6"
             onClick={onCreateClick}
           >
             <Plus className="h-4 w-4 mr-2" /> New Project
@@ -150,7 +150,7 @@ export function ProjectTable({
         </div>
       ) : (
         <>
-          <div className="rounded-md border border bg-white overflow-hidden">
+          <div className="rounded-md border border bg-card overflow-hidden">
             <Table>
               <TableHeader>
                 <TableRow>

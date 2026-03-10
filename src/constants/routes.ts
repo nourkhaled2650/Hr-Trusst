@@ -11,6 +11,7 @@ export const ROUTES = {
 
   // Employee
   EMPLOYEE_ATTENDANCE: "/attendance",
+  EMPLOYEE_ATTENDANCE_LOG: "/attendance/log",
   EMPLOYEE_PROJECTS: "/projects",
 
   // Admin

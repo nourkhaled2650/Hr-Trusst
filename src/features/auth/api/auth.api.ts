@@ -1,9 +1,9 @@
 import { apiClient } from "@/lib/axios";
 import type { LoginTokens, SessionUser } from "@/types";
-import type { LoginRequest } from "../types/auth.types";
+import type { LoginFormValues } from "../schemas/auth.schema";
 
 export const authApi = {
-  login: async (payload: LoginRequest): Promise<LoginTokens> => {
+  login: async (payload: LoginFormValues): Promise<LoginTokens> => {
     const { data } = await apiClient.post<LoginTokens>(
       "/api/auth/login",
       payload,

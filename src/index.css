@@ -16,13 +16,21 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.28 0.04 255);
 
-  /* 🔵 Logo Navy */
-  --primary: oklch(0.32 0.05 252);
-  --primary-foreground: oklch(0.98 0.01 250);
+  /* 🟣 Brand Violet — interactive primary (buttons, links, focus rings) */
+  --primary: oklch(0.541 0.281 293.009);
+  --primary-foreground: oklch(1 0 0);
 
-  /* 🟡 Logo Gold */
-  --accent: oklch(0.72 0.08 85);
-  --accent-foreground: oklch(0.25 0.02 80);
+  /* 🔵 Logo Navy — branding use only */
+  --navy: oklch(0.32 0.05 252);
+  --navy-foreground: oklch(0.98 0.01 250);
+
+  /* 🟡 Logo Gold — decorative use only, not interactive hover */
+  --gold: oklch(0.72 0.08 85);
+  --gold-foreground: oklch(0.25 0.02 80);
+
+  /* Accent — used by shadcn for menu/select/command hover states */
+  --accent: oklch(0.969 0.016 293.756);
+  --accent-foreground: oklch(0.541 0.281 293.009);
 
   /* Neutral system */
   --secondary: oklch(0.95 0.01 250);
@@ -32,10 +40,11 @@
   --muted-foreground: oklch(0.55 0.02 250);
 
   --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
 
   --border: oklch(0.9 0.01 250);
   --input: oklch(0.9 0.01 250);
-  --ring: oklch(0.32 0.05 252);
+  --ring: oklch(0.541 0.281 293.009);
 
   /* Charts (brand-based scale) */
   --chart-1: oklch(0.72 0.08 85); /* gold */
@@ -44,23 +53,23 @@
   --chart-4: oklch(0.32 0.05 252); /* navy */
   --chart-5: oklch(0.25 0.04 252);
 
-  /* Brand (violet — interactive UI accent) */
-  --brand: oklch(0.541 0.281 293.009);
-  --brand-hover: oklch(0.491 0.270 292.581);
-  --brand-foreground: oklch(1 0 0);
+  /* Brand — aliases primary so bg-brand = bg-primary */
+  --brand: var(--primary);
+  --brand-hover: oklch(0.491 0.27 292.581);
+  --brand-foreground: var(--primary-foreground);
   --brand-subtle: oklch(0.969 0.016 293.756);
   --brand-muted: oklch(0.943 0.029 294.588);
   --brand-border: oklch(0.894 0.057 293.283);
 
   /* Warning (amber) */
   --warning: oklch(0.666 0.179 58.318);
-  --warning-foreground: oklch(0.473 0.137 46.201);
+  --warning-foreground: oklch(0.987 0.022 95.277);
   --warning-subtle: oklch(0.987 0.022 95.277);
-  --warning-border: oklch(0.924 0.120 95.746);
+  --warning-border: oklch(0.924 0.12 95.746);
 
   /* Success (green) */
   --success: oklch(0.527 0.154 150.069);
-  --success-foreground: oklch(0.393 0.095 152.535);
+  --success-foreground: oklch(0.951 0.026 145.496);
   --success-subtle: oklch(0.951 0.026 145.496);
   --success-border: oklch(0.882 0.059 145.604);
 
@@ -70,11 +79,11 @@
   --sidebar: oklch(0.97 0.01 250);
   --sidebar-foreground: oklch(0.28 0.04 255);
 
-  --sidebar-primary: oklch(0.32 0.05 252);
-  --sidebar-primary-foreground: oklch(0.98 0.01 250);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
 
-  --sidebar-accent: oklch(0.72 0.08 85);
-  --sidebar-accent-foreground: oklch(0.25 0.02 80);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
 
   --sidebar-border: oklch(0.9 0.01 250);
   --sidebar-ring: oklch(0.32 0.05 252);
@@ -90,13 +99,21 @@
   --popover: oklch(0.22 0.03 252);
   --popover-foreground: oklch(0.96 0.01 250);
 
-  /* Slightly brighter navy for visibility */
-  --primary: oklch(0.45 0.06 252);
-  --primary-foreground: oklch(0.15 0.02 252);
+  /* Brand Violet (lightened for dark mode) */
+  --primary: oklch(0.702 0.183 293.541);
+  --primary-foreground: oklch(1 0 0);
 
-  /* Gold pops beautifully in dark mode */
-  --accent: oklch(0.75 0.09 85);
-  --accent-foreground: oklch(0.2 0.02 80);
+  /* Logo Navy */
+  --navy: oklch(0.45 0.06 252);
+  --navy-foreground: oklch(0.15 0.02 252);
+
+  /* Logo Gold — decorative only */
+  --gold: oklch(0.75 0.09 85);
+  --gold-foreground: oklch(0.2 0.02 80);
+
+  /* Accent — menu/select/command hover states, brand-tinted */
+  --accent: oklch(0.2 0.04 293);
+  --accent-foreground: oklch(0.702 0.183 293.541);
 
   --secondary: oklch(0.26 0.02 252);
   --secondary-foreground: oklch(0.96 0.01 250);
@@ -105,10 +122,11 @@
   --muted-foreground: oklch(0.7 0.02 250);
 
   --destructive: oklch(0.7 0.19 22);
+  --destructive-foreground: oklch(0.99 0 0);
 
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.75 0.09 85);
+  --ring: var(--primary);
 
   /* Charts */
   --chart-1: oklch(0.75 0.09 85);
@@ -117,22 +135,22 @@
   --chart-4: oklch(0.45 0.06 252);
   --chart-5: oklch(0.35 0.05 252);
 
-  /* Brand */
-  --brand: oklch(0.702 0.183 293.541);
-  --brand-hover: oklch(0.606 0.250 292.717);
-  --brand-foreground: oklch(1 0 0);
+  /* Brand — aliases primary */
+  --brand: var(--primary);
+  --brand-hover: oklch(0.606 0.25 292.717);
+  --brand-foreground: var(--primary-foreground);
   --brand-subtle: oklch(0.2 0.04 293);
   --brand-muted: oklch(0.25 0.05 293);
   --brand-border: oklch(0.35 0.08 293);
 
   /* Warning */
-  --warning: oklch(0.769 0.188 70.080);
+  --warning: oklch(0.769 0.188 70.08);
   --warning-foreground: oklch(0.9 0.05 85);
   --warning-subtle: oklch(0.22 0.04 80);
   --warning-border: oklch(0.35 0.07 75);
 
   /* Success */
-  --success: oklch(0.696 0.170 151.815);
+  --success: oklch(0.696 0.17 151.815);
   --success-foreground: oklch(0.9 0.04 150);
   --success-subtle: oklch(0.2 0.04 150);
   --success-border: oklch(0.35 0.07 150);
@@ -143,8 +161,8 @@
   --sidebar-primary: oklch(0.75 0.09 85);
   --sidebar-primary-foreground: oklch(0.18 0.02 252);
 
-  --sidebar-accent: oklch(0.3 0.04 252);
-  --sidebar-accent-foreground: oklch(0.96 0.01 250);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
 
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.75 0.09 85);
@@ -152,6 +170,14 @@
 
 @theme inline {
   --font-sans: "Inter Variable", sans-serif;
+
+  /* Navy (logo color — not interactive) */
+  --color-navy: var(--navy);
+  --color-navy-foreground: var(--navy-foreground);
+
+  /* Gold (logo color — decorative only, not for hover/interactive states) */
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
 
   /* Brand */
   --color-brand: var(--brand);
@@ -189,6 +215,7 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);

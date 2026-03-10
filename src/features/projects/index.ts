@@ -37,7 +37,4 @@ export type {
 } from "./types/projects.types";
 
 // Utils
-export {
-  mapProjectToFormValues,
-  buildProjectPayload,
-} from "./utils/projects.utils";
+export { mapProjectToFormValues } from "./utils/projects.utils";

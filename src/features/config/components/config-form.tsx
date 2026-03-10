@@ -92,7 +92,7 @@ function ConfigEmptyState({ onCreateClick }: EmptyStateProps) {
         configuration to enable payroll calculations.
       </p>
       <Button
-        className="mt-6 bg-brand hover:bg-brand-hover"
+        className="mt-6"
         onClick={onCreateClick}
       >
         <Plus className="h-4 w-4 mr-2" />
@@ -201,7 +201,7 @@ function ConfigFormBody({ config, isCreateMode }: FormBodyProps) {
           <div className="flex justify-end pt-2">
             <Button
               type="button"
-              className="bg-brand hover:bg-brand-hover w-full sm:w-auto"
+              className="w-full sm:w-auto"
               disabled={(!isDirty && !isCreateMode) || isPending}
               onClick={async () => {
                 const valid = await trigger();
@@ -230,7 +230,6 @@ function ConfigFormBody({ config, isCreateMode }: FormBodyProps) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-brand hover:bg-brand-hover"
               onClick={handleConfirmedSave}
             >
               Yes, save configuration
