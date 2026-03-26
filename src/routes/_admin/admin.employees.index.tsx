@@ -35,26 +35,26 @@ function AdminEmployeesPage() {
   };
 
   return (
-    <div className="container py-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-foreground">Employees</h1>
-        <Button
-          onClick={() => setCreateOpen(true)}
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          New Employee
-        </Button>
+    <div className="flex flex-col items-center  gap-4 container py-6 ">
+      <div className="w-full">
+        <div className="flex items-center justify-between ">
+          <h1 className="text-2xl font-semibold text-foreground">Employees</h1>
+          <Button onClick={() => setCreateOpen(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            New Employee
+          </Button>
+        </div>
+
+        <EmployeeTable
+          employees={employees}
+          isLoading={isLoading}
+          isError={isError}
+          onNavigate={handleNavigate}
+          onCreateClick={() => setCreateOpen(true)}
+        />
+
+        <CreateEmployeeDialog open={createOpen} onOpenChange={setCreateOpen} />
       </div>
-
-      <EmployeeTable
-        employees={employees}
-        isLoading={isLoading}
-        isError={isError}
-        onNavigate={handleNavigate}
-        onCreateClick={() => setCreateOpen(true)}
-      />
-
-      <CreateEmployeeDialog open={createOpen} onOpenChange={setCreateOpen} />
     </div>
   );
 }

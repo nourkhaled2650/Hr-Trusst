@@ -14,7 +14,7 @@ const AdminLayout = () => {
       <AdminNavbar />
       <main
         className={cn(
-          "pt-14 min-h-screen transition-all duration-200 ease-in-out",
+          "pt-14 min-h-screen transition-all duration-200 ease-in-out flex justify-center",
           sidebarOpen ? "ml-60" : "ml-14",
         )}
       >
