@@ -1,0 +1,1 @@
+export { PayrollMonthDetailPage } from "./PayrollMonthDetailPage";

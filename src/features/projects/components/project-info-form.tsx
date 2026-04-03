@@ -1,6 +1,5 @@
 import { Controller } from "react-hook-form";
 import type { UseFormReturn } from "react-hook-form";
-import { XCircle } from "lucide-react";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import {
   Select,
@@ -12,22 +11,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { DatePicker } from "@/components/shared/date-picker";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import type { UpdateProjectFormValues, ProjectStatus } from "../types/projects.types";
+import type { UpdateProjectFormValues } from "../types/projects.types";
 
 type Props = {
   form: UseFormReturn<UpdateProjectFormValues>;
   disabled: boolean;
-  projectStatus: ProjectStatus;
-  onCloseProjectClick: () => void;
 };
 
 export function ProjectInfoForm({
   form,
   disabled,
-  projectStatus,
-  onCloseProjectClick,
 }: Props) {
   const { register, formState: { errors }, control } = form;
 
@@ -134,36 +127,6 @@ export function ProjectInfoForm({
         />
         <FieldError errors={[errors.status]} />
       </Field>
-
-      {projectStatus !== "COMPLETED" && (
-        <div className="pt-4">
-          <Separator className="mb-4" />
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/70 mb-3">
-            Danger Zone
-          </p>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-foreground/80">
-                Close this project
-              </p>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Marks the project as Completed. Employees will no longer be
-                able to log hours.
-              </p>
-            </div>
-            <Button
-              type="button"
-              variant="outline"
-              className="border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive ml-6 shrink-0"
-              onClick={onCloseProjectClick}
-              disabled={disabled}
-            >
-              <XCircle className="h-4 w-4 mr-2" />
-              Close Project
-            </Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

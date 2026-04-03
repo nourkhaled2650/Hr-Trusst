@@ -67,6 +67,7 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
       position: "",
       employeeType: undefined,
       basicSalary: undefined,
+      hourlyRate: undefined,
     },
   });
 
@@ -306,7 +307,14 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
                 name="employeeType"
                 render={({ field }) => (
                   <Select
-                    onValueChange={field.onChange}
+                    onValueChange={(val) => {
+                      field.onChange(val);
+                      if (val === "PART_TIME") {
+                        form.setValue("basicSalary", undefined);
+                      } else if (val === "FULL_TIME") {
+                        form.setValue("hourlyRate", undefined);
+                      }
+                    }}
                     value={field.value ?? ""}
                     disabled={isPending}
                   >
@@ -323,29 +331,55 @@ export function CreateEmployeeDialog({ open, onOpenChange }: Props) {
               <FieldError errors={[errors.employeeType]} />
             </Field>
 
-            <Field>
-              <FieldLabel htmlFor="basicSalary">Basic Salary</FieldLabel>
-              <Controller
-                control={form.control}
-                name="basicSalary"
-                render={({ field }) => (
-                  <Input
-                    id="basicSalary"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    placeholder="0.00"
-                    disabled={isPending}
-                    value={field.value ?? ""}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      field.onChange(v === "" ? undefined : Number(v));
-                    }}
-                  />
-                )}
-              />
-              <FieldError errors={[errors.basicSalary]} />
-            </Field>
+            {form.watch("employeeType") === "PART_TIME" ? (
+              <Field>
+                <FieldLabel htmlFor="hourlyRate">Hourly Rate</FieldLabel>
+                <Controller
+                  control={form.control}
+                  name="hourlyRate"
+                  render={({ field }) => (
+                    <Input
+                      id="hourlyRate"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      placeholder="0.00"
+                      disabled={isPending}
+                      value={field.value ?? ""}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        field.onChange(v === "" ? undefined : Number(v));
+                      }}
+                    />
+                  )}
+                />
+                <FieldError errors={[errors.hourlyRate]} />
+              </Field>
+            ) : (
+              <Field>
+                <FieldLabel htmlFor="basicSalary">Basic Salary</FieldLabel>
+                <Controller
+                  control={form.control}
+                  name="basicSalary"
+                  render={({ field }) => (
+                    <Input
+                      id="basicSalary"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      placeholder="0.00"
+                      disabled={isPending}
+                      value={field.value ?? ""}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        field.onChange(v === "" ? undefined : Number(v));
+                      }}
+                    />
+                  )}
+                />
+                <FieldError errors={[errors.basicSalary]} />
+              </Field>
+            )}
 
             {/* API error */}
             {apiError && (

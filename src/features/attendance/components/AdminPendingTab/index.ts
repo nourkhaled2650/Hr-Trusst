@@ -1,0 +1,1 @@
+export { AdminPendingTab } from "./AdminPendingTab";

@@ -20,6 +20,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ProjectStatusBadge } from "./project-status-badge";
+import { ProjectKpiStrip } from "./ProjectKpiStrip";
+import { HealthDot } from "./HealthDot";
 import type { Project, ProjectStatus } from "../types/projects.types";
 import { formatDate } from "@/lib/utils";
 import { useDebounce } from "./use-debounce";
@@ -86,6 +88,9 @@ export function ProjectTable({
 
   return (
     <div className="space-y-4">
+      {/* KPI stats strip */}
+      <ProjectKpiStrip />
+
       {/* Filter row */}
       <div className="flex items-center gap-3">
         <Input
@@ -159,6 +164,7 @@ export function ProjectTable({
                   <TableHead className="w-28">Start</TableHead>
                   <TableHead className="w-28">End</TableHead>
                   <TableHead className="w-32">Status</TableHead>
+                  <TableHead className="w-28">Total Cost</TableHead>
                   <TableHead className="w-12" />
                 </TableRow>
               </TableHeader>
@@ -195,7 +201,15 @@ export function ProjectTable({
                       </span>
                     </TableCell>
                     <TableCell>
-                      <ProjectStatusBadge status={project.status} />
+                      <div className="flex items-center gap-2">
+                        {/* Health dot — placeholder null until health-overview endpoint is ready */}
+                        <HealthDot status={null} />
+                        <ProjectStatusBadge status={project.status} />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      {/* PLACEHOLDER: shows "—" until GET /api/admin/projects/health-overview is implemented */}
+                      <span className="text-sm tabular-nums text-muted-foreground">—</span>
                     </TableCell>
                     <TableCell>
                       <Button

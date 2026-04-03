@@ -75,3 +75,109 @@ export const adminWorkingDaySchema = z.object({
   dayStatus: z.enum(["open", "pending", "approved", "rejected", "locked"]),
   hasManualSession: z.boolean(),
 });
+
+// ---------------------------------------------------------------------------
+// Shared — DayStatus (without "locked")
+// ---------------------------------------------------------------------------
+export const dayStatusSchema = z.enum(["open", "pending", "approved", "rejected"]);
+
+// ---------------------------------------------------------------------------
+// WorkingDayRow — employee history list and admin all-days list
+// ---------------------------------------------------------------------------
+export const workingDayRowSchema = z.object({
+  dayId: z.number(),
+  date: z.string(), // YYYY-MM-DD
+  totalHours: z.number(),
+  dayStatus: dayStatusSchema,
+  hasManualSession: z.boolean(),
+  overtimeHours: z.number(),
+  latenessMinutes: z.number(),
+});
+
+export const pagedResponseSchema = <T extends z.ZodTypeAny>(itemSchema: T) =>
+  z.object({
+    content: z.array(itemSchema),
+    totalElements: z.number(),
+    totalPages: z.number(),
+    number: z.number(),
+    size: z.number(),
+  });
+
+// ---------------------------------------------------------------------------
+// DayDetail — employee day detail page
+// ---------------------------------------------------------------------------
+export const sessionEntrySchema = z.object({
+  startTime: z.string(), // ISO-8601 datetime
+  endTime: z.string().nullable(),
+  durationHours: z.number(),
+  isManual: z.boolean(),
+});
+
+export const projectEntrySchema = z.object({
+  projectName: z.string(),
+  hours: z.number(),
+  notes: z.string().nullable(),
+});
+
+export const dayDetailSchema = z.object({
+  date: z.string(), // YYYY-MM-DD
+  totalHours: z.number(),
+  dayStatus: dayStatusSchema,
+  hasManualSession: z.boolean(),
+  latenessMinutes: z.number(),
+  overtimeHours: z.number(),
+  sessions: z.array(sessionEntrySchema),
+  projectEntries: z.array(projectEntrySchema),
+});
+
+// ---------------------------------------------------------------------------
+// Admin — Today employee status
+// ---------------------------------------------------------------------------
+export const adminTodayStatusSchema = z.enum([
+  "not_started",
+  "active",
+  "submitted",
+  "pending_review",
+  "approved",
+]);
+
+export const adminTodayEmployeeSchema = z.object({
+  employeeId: z.number(),
+  employeeName: z.string(),
+  employmentType: z.enum(["FULL_TIME", "PART_TIME"]),
+  status: adminTodayStatusSchema,
+  clockedInAt: z.string().nullable(),
+  totalHoursToday: z.number(),
+  isLateToday: z.boolean(),
+});
+
+// ---------------------------------------------------------------------------
+// Admin — All Days row (extends WorkingDayRow with employee info)
+// ---------------------------------------------------------------------------
+export const adminWorkingDayRowSchema = workingDayRowSchema.extend({
+  employeeId: z.number(),
+  employeeName: z.string(),
+  employmentType: z.enum(["FULL_TIME", "PART_TIME"]),
+});
+
+// ---------------------------------------------------------------------------
+// Admin — Filters
+// ---------------------------------------------------------------------------
+export const attendanceDayFiltersSchema = z.object({
+  page: z.number(),
+  size: z.number().optional(),
+  employeeId: z.number().optional(),
+  status: z.string().optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
+  hasManualSession: z.boolean().optional(),
+});
+
+// ---------------------------------------------------------------------------
+// Admin — Monthly stats
+// ---------------------------------------------------------------------------
+export const attendanceMonthStatsSchema = z.object({
+  overtimeDaysThisMonth: z.number(),
+  manualSessionsThisMonth: z.number(),
+  monthlyHoursTotal: z.number(),
+});

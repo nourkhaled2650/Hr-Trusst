@@ -14,21 +14,29 @@ import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as EmployeeIndexRouteImport } from './routes/_employee/index'
 import { Route as EmployeeProjectsRouteImport } from './routes/_employee/projects'
+import { Route as EmployeePayslipsRouteImport } from './routes/_employee/payslips'
 import { Route as EmployeeLeaveRouteImport } from './routes/_employee/leave'
 import { Route as EmployeeAttendanceRouteImport } from './routes/_employee/attendance'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as EmployeePayslipsIndexRouteImport } from './routes/_employee/payslips.index'
 import { Route as EmployeeAttendanceIndexRouteImport } from './routes/_employee/attendance.index'
 import { Route as AdminAdminIndexRouteImport } from './routes/_admin/admin.index'
 import { Route as EmployeeAttendanceLogRouteImport } from './routes/_employee/attendance.log'
+import { Route as EmployeeAttendanceDateRouteImport } from './routes/_employee/attendance.$date'
 import { Route as AdminAdminSettingsRouteImport } from './routes/_admin/admin.settings'
 import { Route as AdminAdminProjectsRouteImport } from './routes/_admin/admin.projects'
 import { Route as AdminAdminPermissionsRouteImport } from './routes/_admin/admin.permissions'
+import { Route as AdminAdminPayrollRouteImport } from './routes/_admin/admin.payroll'
+import { Route as AdminAdminLeaveRouteImport } from './routes/_admin/admin.leave'
 import { Route as AdminAdminEmployeesRouteImport } from './routes/_admin/admin.employees'
 import { Route as AdminAdminAttendanceRouteImport } from './routes/_admin/admin.attendance'
 import { Route as AdminAdminProjectsIndexRouteImport } from './routes/_admin/admin.projects.index'
+import { Route as AdminAdminPayrollIndexRouteImport } from './routes/_admin/admin.payroll.index'
 import { Route as AdminAdminEmployeesIndexRouteImport } from './routes/_admin/admin.employees.index'
+import { Route as EmployeePayslipsYearMonthRouteImport } from './routes/_employee/payslips.$year.$month'
 import { Route as AdminAdminProjectsProjectIdRouteImport } from './routes/_admin/admin.projects.$projectId'
 import { Route as AdminAdminEmployeesEmployeeIdRouteImport } from './routes/_admin/admin.employees.$employeeId'
+import { Route as AdminAdminPayrollYearMonthRouteImport } from './routes/_admin/admin.payroll.$year.$month'
 
 const EmployeeRoute = EmployeeRouteImport.update({
   id: '/_employee',
@@ -52,6 +60,11 @@ const EmployeeProjectsRoute = EmployeeProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => EmployeeRoute,
 } as any)
+const EmployeePayslipsRoute = EmployeePayslipsRouteImport.update({
+  id: '/payslips',
+  path: '/payslips',
+  getParentRoute: () => EmployeeRoute,
+} as any)
 const EmployeeLeaveRoute = EmployeeLeaveRouteImport.update({
   id: '/leave',
   path: '/leave',
@@ -67,6 +80,11 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AuthRoute,
 } as any)
+const EmployeePayslipsIndexRoute = EmployeePayslipsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EmployeePayslipsRoute,
+} as any)
 const EmployeeAttendanceIndexRoute = EmployeeAttendanceIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -80,6 +98,11 @@ const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
 const EmployeeAttendanceLogRoute = EmployeeAttendanceLogRouteImport.update({
   id: '/log',
   path: '/log',
+  getParentRoute: () => EmployeeAttendanceRoute,
+} as any)
+const EmployeeAttendanceDateRoute = EmployeeAttendanceDateRouteImport.update({
+  id: '/$date',
+  path: '/$date',
   getParentRoute: () => EmployeeAttendanceRoute,
 } as any)
 const AdminAdminSettingsRoute = AdminAdminSettingsRouteImport.update({
@@ -97,6 +120,16 @@ const AdminAdminPermissionsRoute = AdminAdminPermissionsRouteImport.update({
   path: '/admin/permissions',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAdminPayrollRoute = AdminAdminPayrollRouteImport.update({
+  id: '/admin/payroll',
+  path: '/admin/payroll',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminLeaveRoute = AdminAdminLeaveRouteImport.update({
+  id: '/admin/leave',
+  path: '/admin/leave',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminAdminEmployeesRoute = AdminAdminEmployeesRouteImport.update({
   id: '/admin/employees',
   path: '/admin/employees',
@@ -112,11 +145,22 @@ const AdminAdminProjectsIndexRoute = AdminAdminProjectsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminAdminProjectsRoute,
 } as any)
+const AdminAdminPayrollIndexRoute = AdminAdminPayrollIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminAdminPayrollRoute,
+} as any)
 const AdminAdminEmployeesIndexRoute =
   AdminAdminEmployeesIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => AdminAdminEmployeesRoute,
+  } as any)
+const EmployeePayslipsYearMonthRoute =
+  EmployeePayslipsYearMonthRouteImport.update({
+    id: '/$year/$month',
+    path: '/$year/$month',
+    getParentRoute: () => EmployeePayslipsRoute,
   } as any)
 const AdminAdminProjectsProjectIdRoute =
   AdminAdminProjectsProjectIdRouteImport.update({
@@ -130,25 +174,39 @@ const AdminAdminEmployeesEmployeeIdRoute =
     path: '/$employeeId',
     getParentRoute: () => AdminAdminEmployeesRoute,
   } as any)
+const AdminAdminPayrollYearMonthRoute =
+  AdminAdminPayrollYearMonthRouteImport.update({
+    id: '/$year/$month',
+    path: '/$year/$month',
+    getParentRoute: () => AdminAdminPayrollRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof EmployeeIndexRoute
   '/login': typeof AuthLoginRoute
   '/attendance': typeof EmployeeAttendanceRouteWithChildren
   '/leave': typeof EmployeeLeaveRoute
+  '/payslips': typeof EmployeePayslipsRouteWithChildren
   '/projects': typeof EmployeeProjectsRoute
   '/admin/attendance': typeof AdminAdminAttendanceRoute
   '/admin/employees': typeof AdminAdminEmployeesRouteWithChildren
+  '/admin/leave': typeof AdminAdminLeaveRoute
+  '/admin/payroll': typeof AdminAdminPayrollRouteWithChildren
   '/admin/permissions': typeof AdminAdminPermissionsRoute
   '/admin/projects': typeof AdminAdminProjectsRouteWithChildren
   '/admin/settings': typeof AdminAdminSettingsRoute
+  '/attendance/$date': typeof EmployeeAttendanceDateRoute
   '/attendance/log': typeof EmployeeAttendanceLogRoute
   '/admin/': typeof AdminAdminIndexRoute
   '/attendance/': typeof EmployeeAttendanceIndexRoute
+  '/payslips/': typeof EmployeePayslipsIndexRoute
   '/admin/employees/$employeeId': typeof AdminAdminEmployeesEmployeeIdRoute
   '/admin/projects/$projectId': typeof AdminAdminProjectsProjectIdRoute
+  '/payslips/$year/$month': typeof EmployeePayslipsYearMonthRoute
   '/admin/employees/': typeof AdminAdminEmployeesIndexRoute
+  '/admin/payroll/': typeof AdminAdminPayrollIndexRoute
   '/admin/projects/': typeof AdminAdminProjectsIndexRoute
+  '/admin/payroll/$year/$month': typeof AdminAdminPayrollYearMonthRoute
 }
 export interface FileRoutesByTo {
   '/': typeof EmployeeIndexRoute
@@ -156,15 +214,21 @@ export interface FileRoutesByTo {
   '/leave': typeof EmployeeLeaveRoute
   '/projects': typeof EmployeeProjectsRoute
   '/admin/attendance': typeof AdminAdminAttendanceRoute
+  '/admin/leave': typeof AdminAdminLeaveRoute
   '/admin/permissions': typeof AdminAdminPermissionsRoute
   '/admin/settings': typeof AdminAdminSettingsRoute
+  '/attendance/$date': typeof EmployeeAttendanceDateRoute
   '/attendance/log': typeof EmployeeAttendanceLogRoute
   '/admin': typeof AdminAdminIndexRoute
   '/attendance': typeof EmployeeAttendanceIndexRoute
+  '/payslips': typeof EmployeePayslipsIndexRoute
   '/admin/employees/$employeeId': typeof AdminAdminEmployeesEmployeeIdRoute
   '/admin/projects/$projectId': typeof AdminAdminProjectsProjectIdRoute
+  '/payslips/$year/$month': typeof EmployeePayslipsYearMonthRoute
   '/admin/employees': typeof AdminAdminEmployeesIndexRoute
+  '/admin/payroll': typeof AdminAdminPayrollIndexRoute
   '/admin/projects': typeof AdminAdminProjectsIndexRoute
+  '/admin/payroll/$year/$month': typeof AdminAdminPayrollYearMonthRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -174,20 +238,28 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_employee/attendance': typeof EmployeeAttendanceRouteWithChildren
   '/_employee/leave': typeof EmployeeLeaveRoute
+  '/_employee/payslips': typeof EmployeePayslipsRouteWithChildren
   '/_employee/projects': typeof EmployeeProjectsRoute
   '/_employee/': typeof EmployeeIndexRoute
   '/_admin/admin/attendance': typeof AdminAdminAttendanceRoute
   '/_admin/admin/employees': typeof AdminAdminEmployeesRouteWithChildren
+  '/_admin/admin/leave': typeof AdminAdminLeaveRoute
+  '/_admin/admin/payroll': typeof AdminAdminPayrollRouteWithChildren
   '/_admin/admin/permissions': typeof AdminAdminPermissionsRoute
   '/_admin/admin/projects': typeof AdminAdminProjectsRouteWithChildren
   '/_admin/admin/settings': typeof AdminAdminSettingsRoute
+  '/_employee/attendance/$date': typeof EmployeeAttendanceDateRoute
   '/_employee/attendance/log': typeof EmployeeAttendanceLogRoute
   '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_employee/attendance/': typeof EmployeeAttendanceIndexRoute
+  '/_employee/payslips/': typeof EmployeePayslipsIndexRoute
   '/_admin/admin/employees/$employeeId': typeof AdminAdminEmployeesEmployeeIdRoute
   '/_admin/admin/projects/$projectId': typeof AdminAdminProjectsProjectIdRoute
+  '/_employee/payslips/$year/$month': typeof EmployeePayslipsYearMonthRoute
   '/_admin/admin/employees/': typeof AdminAdminEmployeesIndexRoute
+  '/_admin/admin/payroll/': typeof AdminAdminPayrollIndexRoute
   '/_admin/admin/projects/': typeof AdminAdminProjectsIndexRoute
+  '/_admin/admin/payroll/$year/$month': typeof AdminAdminPayrollYearMonthRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -196,19 +268,27 @@ export interface FileRouteTypes {
     | '/login'
     | '/attendance'
     | '/leave'
+    | '/payslips'
     | '/projects'
     | '/admin/attendance'
     | '/admin/employees'
+    | '/admin/leave'
+    | '/admin/payroll'
     | '/admin/permissions'
     | '/admin/projects'
     | '/admin/settings'
+    | '/attendance/$date'
     | '/attendance/log'
     | '/admin/'
     | '/attendance/'
+    | '/payslips/'
     | '/admin/employees/$employeeId'
     | '/admin/projects/$projectId'
+    | '/payslips/$year/$month'
     | '/admin/employees/'
+    | '/admin/payroll/'
     | '/admin/projects/'
+    | '/admin/payroll/$year/$month'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -216,15 +296,21 @@ export interface FileRouteTypes {
     | '/leave'
     | '/projects'
     | '/admin/attendance'
+    | '/admin/leave'
     | '/admin/permissions'
     | '/admin/settings'
+    | '/attendance/$date'
     | '/attendance/log'
     | '/admin'
     | '/attendance'
+    | '/payslips'
     | '/admin/employees/$employeeId'
     | '/admin/projects/$projectId'
+    | '/payslips/$year/$month'
     | '/admin/employees'
+    | '/admin/payroll'
     | '/admin/projects'
+    | '/admin/payroll/$year/$month'
   id:
     | '__root__'
     | '/_admin'
@@ -233,20 +319,28 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_employee/attendance'
     | '/_employee/leave'
+    | '/_employee/payslips'
     | '/_employee/projects'
     | '/_employee/'
     | '/_admin/admin/attendance'
     | '/_admin/admin/employees'
+    | '/_admin/admin/leave'
+    | '/_admin/admin/payroll'
     | '/_admin/admin/permissions'
     | '/_admin/admin/projects'
     | '/_admin/admin/settings'
+    | '/_employee/attendance/$date'
     | '/_employee/attendance/log'
     | '/_admin/admin/'
     | '/_employee/attendance/'
+    | '/_employee/payslips/'
     | '/_admin/admin/employees/$employeeId'
     | '/_admin/admin/projects/$projectId'
+    | '/_employee/payslips/$year/$month'
     | '/_admin/admin/employees/'
+    | '/_admin/admin/payroll/'
     | '/_admin/admin/projects/'
+    | '/_admin/admin/payroll/$year/$month'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -292,6 +386,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmployeeProjectsRouteImport
       parentRoute: typeof EmployeeRoute
     }
+    '/_employee/payslips': {
+      id: '/_employee/payslips'
+      path: '/payslips'
+      fullPath: '/payslips'
+      preLoaderRoute: typeof EmployeePayslipsRouteImport
+      parentRoute: typeof EmployeeRoute
+    }
     '/_employee/leave': {
       id: '/_employee/leave'
       path: '/leave'
@@ -313,6 +414,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_employee/payslips/': {
+      id: '/_employee/payslips/'
+      path: '/'
+      fullPath: '/payslips/'
+      preLoaderRoute: typeof EmployeePayslipsIndexRouteImport
+      parentRoute: typeof EmployeePayslipsRoute
+    }
     '/_employee/attendance/': {
       id: '/_employee/attendance/'
       path: '/'
@@ -332,6 +440,13 @@ declare module '@tanstack/react-router' {
       path: '/log'
       fullPath: '/attendance/log'
       preLoaderRoute: typeof EmployeeAttendanceLogRouteImport
+      parentRoute: typeof EmployeeAttendanceRoute
+    }
+    '/_employee/attendance/$date': {
+      id: '/_employee/attendance/$date'
+      path: '/$date'
+      fullPath: '/attendance/$date'
+      preLoaderRoute: typeof EmployeeAttendanceDateRouteImport
       parentRoute: typeof EmployeeAttendanceRoute
     }
     '/_admin/admin/settings': {
@@ -355,6 +470,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminPermissionsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/_admin/admin/payroll': {
+      id: '/_admin/admin/payroll'
+      path: '/admin/payroll'
+      fullPath: '/admin/payroll'
+      preLoaderRoute: typeof AdminAdminPayrollRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/leave': {
+      id: '/_admin/admin/leave'
+      path: '/admin/leave'
+      fullPath: '/admin/leave'
+      preLoaderRoute: typeof AdminAdminLeaveRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/_admin/admin/employees': {
       id: '/_admin/admin/employees'
       path: '/admin/employees'
@@ -376,12 +505,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminProjectsIndexRouteImport
       parentRoute: typeof AdminAdminProjectsRoute
     }
+    '/_admin/admin/payroll/': {
+      id: '/_admin/admin/payroll/'
+      path: '/'
+      fullPath: '/admin/payroll/'
+      preLoaderRoute: typeof AdminAdminPayrollIndexRouteImport
+      parentRoute: typeof AdminAdminPayrollRoute
+    }
     '/_admin/admin/employees/': {
       id: '/_admin/admin/employees/'
       path: '/'
       fullPath: '/admin/employees/'
       preLoaderRoute: typeof AdminAdminEmployeesIndexRouteImport
       parentRoute: typeof AdminAdminEmployeesRoute
+    }
+    '/_employee/payslips/$year/$month': {
+      id: '/_employee/payslips/$year/$month'
+      path: '/$year/$month'
+      fullPath: '/payslips/$year/$month'
+      preLoaderRoute: typeof EmployeePayslipsYearMonthRouteImport
+      parentRoute: typeof EmployeePayslipsRoute
     }
     '/_admin/admin/projects/$projectId': {
       id: '/_admin/admin/projects/$projectId'
@@ -396,6 +539,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/employees/$employeeId'
       preLoaderRoute: typeof AdminAdminEmployeesEmployeeIdRouteImport
       parentRoute: typeof AdminAdminEmployeesRoute
+    }
+    '/_admin/admin/payroll/$year/$month': {
+      id: '/_admin/admin/payroll/$year/$month'
+      path: '/$year/$month'
+      fullPath: '/admin/payroll/$year/$month'
+      preLoaderRoute: typeof AdminAdminPayrollYearMonthRouteImport
+      parentRoute: typeof AdminAdminPayrollRoute
     }
   }
 }
@@ -413,6 +563,19 @@ const AdminAdminEmployeesRouteChildren: AdminAdminEmployeesRouteChildren = {
 const AdminAdminEmployeesRouteWithChildren =
   AdminAdminEmployeesRoute._addFileChildren(AdminAdminEmployeesRouteChildren)
 
+interface AdminAdminPayrollRouteChildren {
+  AdminAdminPayrollIndexRoute: typeof AdminAdminPayrollIndexRoute
+  AdminAdminPayrollYearMonthRoute: typeof AdminAdminPayrollYearMonthRoute
+}
+
+const AdminAdminPayrollRouteChildren: AdminAdminPayrollRouteChildren = {
+  AdminAdminPayrollIndexRoute: AdminAdminPayrollIndexRoute,
+  AdminAdminPayrollYearMonthRoute: AdminAdminPayrollYearMonthRoute,
+}
+
+const AdminAdminPayrollRouteWithChildren =
+  AdminAdminPayrollRoute._addFileChildren(AdminAdminPayrollRouteChildren)
+
 interface AdminAdminProjectsRouteChildren {
   AdminAdminProjectsProjectIdRoute: typeof AdminAdminProjectsProjectIdRoute
   AdminAdminProjectsIndexRoute: typeof AdminAdminProjectsIndexRoute
@@ -429,6 +592,8 @@ const AdminAdminProjectsRouteWithChildren =
 interface AdminRouteChildren {
   AdminAdminAttendanceRoute: typeof AdminAdminAttendanceRoute
   AdminAdminEmployeesRoute: typeof AdminAdminEmployeesRouteWithChildren
+  AdminAdminLeaveRoute: typeof AdminAdminLeaveRoute
+  AdminAdminPayrollRoute: typeof AdminAdminPayrollRouteWithChildren
   AdminAdminPermissionsRoute: typeof AdminAdminPermissionsRoute
   AdminAdminProjectsRoute: typeof AdminAdminProjectsRouteWithChildren
   AdminAdminSettingsRoute: typeof AdminAdminSettingsRoute
@@ -438,6 +603,8 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAdminAttendanceRoute: AdminAdminAttendanceRoute,
   AdminAdminEmployeesRoute: AdminAdminEmployeesRouteWithChildren,
+  AdminAdminLeaveRoute: AdminAdminLeaveRoute,
+  AdminAdminPayrollRoute: AdminAdminPayrollRouteWithChildren,
   AdminAdminPermissionsRoute: AdminAdminPermissionsRoute,
   AdminAdminProjectsRoute: AdminAdminProjectsRouteWithChildren,
   AdminAdminSettingsRoute: AdminAdminSettingsRoute,
@@ -457,11 +624,13 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface EmployeeAttendanceRouteChildren {
+  EmployeeAttendanceDateRoute: typeof EmployeeAttendanceDateRoute
   EmployeeAttendanceLogRoute: typeof EmployeeAttendanceLogRoute
   EmployeeAttendanceIndexRoute: typeof EmployeeAttendanceIndexRoute
 }
 
 const EmployeeAttendanceRouteChildren: EmployeeAttendanceRouteChildren = {
+  EmployeeAttendanceDateRoute: EmployeeAttendanceDateRoute,
   EmployeeAttendanceLogRoute: EmployeeAttendanceLogRoute,
   EmployeeAttendanceIndexRoute: EmployeeAttendanceIndexRoute,
 }
@@ -469,9 +638,23 @@ const EmployeeAttendanceRouteChildren: EmployeeAttendanceRouteChildren = {
 const EmployeeAttendanceRouteWithChildren =
   EmployeeAttendanceRoute._addFileChildren(EmployeeAttendanceRouteChildren)
 
+interface EmployeePayslipsRouteChildren {
+  EmployeePayslipsIndexRoute: typeof EmployeePayslipsIndexRoute
+  EmployeePayslipsYearMonthRoute: typeof EmployeePayslipsYearMonthRoute
+}
+
+const EmployeePayslipsRouteChildren: EmployeePayslipsRouteChildren = {
+  EmployeePayslipsIndexRoute: EmployeePayslipsIndexRoute,
+  EmployeePayslipsYearMonthRoute: EmployeePayslipsYearMonthRoute,
+}
+
+const EmployeePayslipsRouteWithChildren =
+  EmployeePayslipsRoute._addFileChildren(EmployeePayslipsRouteChildren)
+
 interface EmployeeRouteChildren {
   EmployeeAttendanceRoute: typeof EmployeeAttendanceRouteWithChildren
   EmployeeLeaveRoute: typeof EmployeeLeaveRoute
+  EmployeePayslipsRoute: typeof EmployeePayslipsRouteWithChildren
   EmployeeProjectsRoute: typeof EmployeeProjectsRoute
   EmployeeIndexRoute: typeof EmployeeIndexRoute
 }
@@ -479,6 +662,7 @@ interface EmployeeRouteChildren {
 const EmployeeRouteChildren: EmployeeRouteChildren = {
   EmployeeAttendanceRoute: EmployeeAttendanceRouteWithChildren,
   EmployeeLeaveRoute: EmployeeLeaveRoute,
+  EmployeePayslipsRoute: EmployeePayslipsRouteWithChildren,
   EmployeeProjectsRoute: EmployeeProjectsRoute,
   EmployeeIndexRoute: EmployeeIndexRoute,
 }

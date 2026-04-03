@@ -21,43 +21,77 @@ export function CompensationSection({ form, disabled }: Props) {
     formState: { errors },
   } = form;
 
+  const employeeType = form.watch("employeeType");
+  const isPartTime = employeeType === "PART_TIME";
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-base font-semibold text-foreground">
           Compensation
         </CardTitle>
-        <CardDescription>Monthly salary configuration</CardDescription>
+        <CardDescription>Compensation based on employee type</CardDescription>
       </CardHeader>
       <CardContent>
-        <Field>
-          <FieldLabel htmlFor="basicSalary">Basic Salary (EGP)</FieldLabel>
-          <Controller
-            control={form.control}
-            name="basicSalary"
-            render={({ field }) => (
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground/70 pointer-events-none">
-                  EGP
-                </span>
-                <Input
-                  id="basicSalary"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  className="pl-12"
-                  disabled={disabled}
-                  value={field.value ?? ""}
-                  onChange={(e) => {
-                    const v = e.target.value;
-                    field.onChange(v === "" ? null : Number(v));
-                  }}
-                />
-              </div>
-            )}
-          />
-          <FieldError errors={[errors.basicSalary]} />
-        </Field>
+        {isPartTime ? (
+          <Field>
+            <FieldLabel htmlFor="hourlyRate">Hourly Rate (EGP)</FieldLabel>
+            <Controller
+              control={form.control}
+              name="hourlyRate"
+              render={({ field }) => (
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground/70 pointer-events-none">
+                    EGP
+                  </span>
+                  <Input
+                    id="hourlyRate"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    className="pl-12"
+                    disabled={disabled}
+                    value={field.value ?? ""}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      field.onChange(v === "" ? null : Number(v));
+                    }}
+                  />
+                </div>
+              )}
+            />
+            <FieldError errors={[errors.hourlyRate]} />
+          </Field>
+        ) : (
+          <Field>
+            <FieldLabel htmlFor="basicSalary">Basic Salary (EGP)</FieldLabel>
+            <Controller
+              control={form.control}
+              name="basicSalary"
+              render={({ field }) => (
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground/70 pointer-events-none">
+                    EGP
+                  </span>
+                  <Input
+                    id="basicSalary"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    className="pl-12"
+                    disabled={disabled}
+                    value={field.value ?? ""}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      field.onChange(v === "" ? null : Number(v));
+                    }}
+                  />
+                </div>
+              )}
+            />
+            <FieldError errors={[errors.basicSalary]} />
+          </Field>
+        )}
       </CardContent>
     </Card>
   );

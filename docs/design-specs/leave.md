@@ -643,3 +643,120 @@ Install any missing components via `npx shadcn@latest add <name>`.
 13. **Public exports from `index.ts`**: Export only the page component and any types needed by other features. Internal components (balance card, history table, dialog) are not exported from `index.ts` — they are imported directly within the feature.
 
 14. **shadcn Toast**: Use the existing `useToast` hook (from `src/components/ui/use-toast`) for the placeholder success toast. Match the pattern used in the employees feature.
+
+---
+
+## 11. Section 3 — Upcoming Approved Requests (Addition)
+
+**Date added**: 2026-04-01
+
+Slots between Section 2 (balance cards) and the history table. The history table becomes Section 4.
+
+### 11.1 Visibility Rule
+
+Only rendered when at least one item in `LEAVE_HISTORY` has `status === "APPROVED"` AND `startDate >= today`. No empty state — if no data, section is absent from the DOM.
+
+### 11.2 Derived Data
+
+```ts
+const today = new Date().toISOString().split("T")[0];
+const upcomingApproved = LEAVE_HISTORY.filter(
+  (r) => r.status === "APPROVED" && r.startDate >= today
+);
+```
+
+Derived constant — not `useState`. Both Section 3 and Section 4 read from the same `LEAVE_HISTORY` source.
+
+### 11.3 Layout
+
+```tsx
+{upcomingApproved.length > 0 && (
+  <div className="space-y-3">
+    <h2 className="text-base font-semibold text-foreground">Upcoming Leave</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {upcomingApproved.map((request) => (
+        <UpcomingLeaveCard key={request.id} request={request} />
+      ))}
+    </div>
+  </div>
+)}
+```
+
+Responsive grid: 1 col mobile → 2 col sm → 3 col lg (max 3 per row).
+
+### 11.4 `UpcomingLeaveCard` Component
+
+Path: `src/features/leave/components/upcoming-leave-card.tsx`
+
+```
+┌────────────────────────────────────────────┐
+│  [Annual Leave badge]          [Approved]  │
+│                                            │
+│  Apr 20, 2026 → Apr 24, 2026              │
+│  5 days                                    │
+└────────────────────────────────────────────┘
+```
+
+```tsx
+<Card>
+  <CardContent className="pt-4 pb-4 px-4">
+    <div className="flex items-center justify-between gap-2 mb-3">
+      <LeaveTypeBadge leaveType={request.leaveType} />
+      <Badge className="bg-success text-success-foreground">
+        <CheckCircle2 className="h-3 w-3 mr-1" />
+        Approved
+      </Badge>
+    </div>
+    <p className="text-sm font-medium text-foreground">
+      {formatDate(request.startDate)}
+      {request.startDate !== request.endDate && (
+        <>
+          <span className="text-muted-foreground mx-1.5">→</span>
+          {formatDate(request.endDate)}
+        </>
+      )}
+    </p>
+    <p className="text-xs text-muted-foreground mt-1">
+      {request.durationDays} {request.durationDays === 1 ? "day" : "days"}
+    </p>
+  </CardContent>
+</Card>
+```
+
+Single-day request: show one date only (no arrow).
+
+### 11.5 `LeaveTypeBadge` Component
+
+Path: `src/features/leave/components/leave-type-badge.tsx`
+
+shadcn `<Badge variant="outline">`:
+
+| `leaveType` (display string) | Classes |
+|---|---|
+| `"Annual Leave"` | `border-primary text-primary` |
+| `"Sick Leave"` | `border-warning text-warning-foreground bg-warning/10` |
+| `"Unpaid Leave"` | `border-border text-muted-foreground` |
+
+### 11.6 Static Data Update
+
+Add one upcoming approved entry to `LEAVE_HISTORY` in `leave-data.ts` so Section 3 renders:
+
+```ts
+{
+  id: 5,
+  leaveType: "Annual Leave",
+  startDate: "2026-04-20",
+  endDate: "2026-04-24",
+  durationDays: 5,
+  reason: "Pre-planned family vacation.",
+  status: "APPROVED",
+  submittedAt: "2026-03-28",
+},
+```
+
+### 11.7 Edge Cases
+
+- **Single-day**: show one date only.
+- **Today's date included**: `startDate >= today` — a leave starting today is included.
+- **Section disappears when all dates pass**: Clean removal, no residual state.
+- **Status badge always "Approved"**: Hardcoded style — no switch needed in the card.

@@ -48,6 +48,11 @@ export interface SessionUser {
    * a graceful degraded state instead of throwing.
    */
   employeeId: number | null;
+  /**
+   * The employment type of the linked employee record.
+   * Null for admin users who have no linked Employee record.
+   */
+  employmentType: "FULL_TIME" | "PART_TIME" | null;
 }
 
 /**

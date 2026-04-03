@@ -26,6 +26,7 @@ export const createEmployeeSchema = z.object({
   position: z.string().max(100).optional().or(z.literal("")),
   employeeType: z.enum(["FULL_TIME", "PART_TIME"]).optional(),
   basicSalary: z.coerce.number().min(0).optional(),
+  hourlyRate: z.coerce.number().min(0).optional(),
 });
 
 // ---------------------------------------------------------------------------
@@ -55,6 +56,7 @@ export const updateEmployeeSchema = z.object({
   address: z.string().max(500).optional().or(z.literal("")),
   position: z.string().max(100).optional().or(z.literal("")),
   basicSalary: z.coerce.number().min(0).optional().nullable(),
+  hourlyRate: z.coerce.number().min(0).optional().nullable(),
   dateOfBirth: z.string().optional().nullable(),
   hireDate: z.string().optional().nullable(),
   employeeType: z.enum(["FULL_TIME", "PART_TIME"]).optional().nullable(),

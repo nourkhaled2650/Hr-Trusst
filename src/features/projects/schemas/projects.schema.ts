@@ -49,6 +49,24 @@ export const updateProjectSchema = z
     startDate: z.string().nullable().optional(),
     endDate: z.string().nullable().optional(),
     status: z.enum(["ACTIVE", "COMPLETED", "ON_HOLD", "CANCELLED"]),
+    budget: z.coerce
+      .number()
+      .min(0)
+      .nullable()
+      .optional()
+      .or(z.literal("").transform(() => null)),
+    revenueTarget: z.coerce
+      .number()
+      .min(0)
+      .nullable()
+      .optional()
+      .or(z.literal("").transform(() => null)),
+    actualRevenue: z.coerce
+      .number()
+      .min(0)
+      .nullable()
+      .optional()
+      .or(z.literal("").transform(() => null)),
   })
   .refine(
     (data) => {
@@ -67,4 +85,24 @@ export const updateProjectSchema = z
 export const assignEmployeeSchema = z.object({
   employeeId: z.coerce.number().int().positive("Please select an employee"),
   roleInProject: z.string().max(100).optional().or(z.literal("")),
+});
+
+// ---------------------------------------------------------------------------
+// Manual Cost Schema
+// ---------------------------------------------------------------------------
+
+export const manualCostSchema = z.object({
+  categoryId: z.number({ error: "Category is required" }).int().positive("Please select a category"),
+  description: z.string().min(1, "Description is required").max(500),
+  amount: z.number({ error: "Amount is required" }).min(0.01, "Amount must be greater than 0"),
+  costDate: z.string().min(1, "Date is required"),
+});
+
+// ---------------------------------------------------------------------------
+// Cost Category Schema
+// ---------------------------------------------------------------------------
+
+export const costCategorySchema = z.object({
+  name: z.string().min(1, "Category name is required").max(100),
+  description: z.string().max(300).optional().or(z.literal("")),
 });

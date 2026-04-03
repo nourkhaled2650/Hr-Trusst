@@ -1,4 +1,4 @@
-import { CalendarDays, Clock, CheckCircle2, XCircle, AlertCircle } from "lucide-react";
+import { CalendarDays, AlertCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -18,44 +17,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { formatDate } from "@/lib/utils";
-import type { LeaveRequest, LeaveStatus } from "../types/leave.types";
-
-// ---------------------------------------------------------------------------
-// Status badge config
-// ---------------------------------------------------------------------------
-type StatusConfig = {
-  label: string;
-  classes: string;
-  Icon: React.ComponentType<{ className?: string }>;
-};
-
-const STATUS_CONFIG: Record<LeaveStatus, StatusConfig> = {
-  PENDING: {
-    label: "Pending",
-    classes: "bg-warning text-warning-foreground",
-    Icon: Clock,
-  },
-  APPROVED: {
-    label: "Approved",
-    classes: "bg-success text-success-foreground",
-    Icon: CheckCircle2,
-  },
-  REJECTED: {
-    label: "Rejected",
-    classes: "bg-destructive/10 text-destructive border border-destructive/20",
-    Icon: XCircle,
-  },
-};
-
-function StatusBadge({ status }: { status: LeaveStatus }) {
-  const { label, classes, Icon } = STATUS_CONFIG[status];
-  return (
-    <Badge className={classes}>
-      <Icon className="h-3 w-3 mr-1" />
-      {label}
-    </Badge>
-  );
-}
+import type { LeaveRequest } from "../types/leave.types";
+import { LeaveTypeBadge } from "./leave-type-badge";
+import { LeaveStatusBadge } from "./leave-status-badge";
 
 // ---------------------------------------------------------------------------
 // Reason cell — tooltip only for long reasons
@@ -166,8 +130,8 @@ export function LeaveHistoryTable({
                       ))
                     : requests.map((request) => (
                         <TableRow key={request.id}>
-                          <TableCell className="text-sm text-foreground">
-                            {request.leaveType}
+                          <TableCell>
+                            <LeaveTypeBadge leaveType={request.leaveType} />
                           </TableCell>
                           <TableCell className="w-32 text-sm text-foreground">
                             {formatDate(request.startDate)}
@@ -181,7 +145,7 @@ export function LeaveHistoryTable({
                           </TableCell>
                           <ReasonCell reason={request.reason} />
                           <TableCell className="w-32">
-                            <StatusBadge status={request.status} />
+                            <LeaveStatusBadge status={request.status} />
                           </TableCell>
                           <TableCell className="w-32 text-sm text-foreground">
                             {formatDate(request.submittedAt)}

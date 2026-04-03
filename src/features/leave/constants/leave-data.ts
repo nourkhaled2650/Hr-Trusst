@@ -53,4 +53,14 @@ export const LEAVE_HISTORY: readonly LeaveRequest[] = [
     status: "REJECTED",
     submittedAt: "2026-01-06",
   },
+  {
+    id: 5,
+    leaveType: "Annual Leave",
+    startDate: "2026-04-20",
+    endDate: "2026-04-24",
+    durationDays: 5,
+    reason: "Pre-planned family vacation.",
+    status: "APPROVED",
+    submittedAt: "2026-03-28",
+  },
 ] as const;

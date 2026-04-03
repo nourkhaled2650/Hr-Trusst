@@ -1,11 +1,12 @@
 import { apiClient } from "@/lib/axios";
-import type { Project, Assignment } from "../types/projects.types";
+import type { Project, Assignment, ProjectKpis } from "../types/projects.types";
 import type {
   CreateProjectFormValues,
   UpdateProjectFormValues,
   AssignEmployeeFormValues,
 } from "../types/projects.types";
 import { buildProjectPayload } from "../utils/projects.utils";
+import { STATIC_PROJECT_KPIS } from "../static/project-kpis.static";
 
 // ---------------------------------------------------------------------------
 // API functions
@@ -119,5 +120,24 @@ export const projectsApi = {
       throw new Error(data.message ?? "Failed to assign employee");
     }
     return data.data;
+  },
+
+  // PLACEHOLDER: returns static data until GET /api/admin/projects/kpis is implemented
+  fetchProjectKpis: async (): Promise<ProjectKpis> => {
+    // TODO: replace with real API call:
+    // const { data } = await apiClient.get<ProjectKpis>("/api/admin/projects/kpis", { _toast: false });
+    // if (data.status !== "success" || data.data === null) throw new Error(data.message ?? "Failed to fetch project KPIs");
+    // return data.data;
+    return Promise.resolve(STATIC_PROJECT_KPIS);
+  },
+
+  deactivateAssignment: async (assignmentId: number): Promise<void> => {
+    const { data } = await apiClient.delete<null>(
+      `/api/admin/projects/assignments/${assignmentId}`,
+      { _toast: false },
+    );
+    if (data.status !== "success") {
+      throw new Error(data.message ?? "Failed to deactivate assignment");
+    }
   },
 } as const;

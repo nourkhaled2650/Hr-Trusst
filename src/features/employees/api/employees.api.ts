@@ -31,6 +31,8 @@ export const employeeApi = {
       employeeType: values.employeeType || undefined,
       basicSalary:
         values.basicSalary != null ? values.basicSalary.toFixed(2) : undefined,
+      hourlyRate:
+        values.hourlyRate != null ? values.hourlyRate : undefined,
     };
 
     const { data } = await apiClient.post<null>("/api/employee", body);

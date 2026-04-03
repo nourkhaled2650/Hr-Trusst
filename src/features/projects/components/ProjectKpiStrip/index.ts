@@ -1,0 +1,1 @@
+export { ProjectKpiStrip } from "./ProjectKpiStrip";

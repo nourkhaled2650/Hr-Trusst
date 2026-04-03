@@ -32,6 +32,7 @@ export interface Employee {
   address: string | null;
   employeeType: "FULL_TIME" | "PART_TIME" | null;
   basicSalary: number | null;
+  hourlyRate: number | null;
   dateOfBirth: string | null; // ISO date YYYY-MM-DD
   hireDate: string | null; // ISO date YYYY-MM-DD
   configurationException: ConfigurationException | null;
