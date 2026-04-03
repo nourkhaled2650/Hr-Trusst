@@ -25,7 +25,6 @@ import { Route as EmployeeAttendanceLogRouteImport } from './routes/_employee/at
 import { Route as EmployeeAttendanceDateRouteImport } from './routes/_employee/attendance.$date'
 import { Route as AdminAdminSettingsRouteImport } from './routes/_admin/admin.settings'
 import { Route as AdminAdminProjectsRouteImport } from './routes/_admin/admin.projects'
-import { Route as AdminAdminPermissionsRouteImport } from './routes/_admin/admin.permissions'
 import { Route as AdminAdminPayrollRouteImport } from './routes/_admin/admin.payroll'
 import { Route as AdminAdminLeaveRouteImport } from './routes/_admin/admin.leave'
 import { Route as AdminAdminEmployeesRouteImport } from './routes/_admin/admin.employees'
@@ -115,11 +114,6 @@ const AdminAdminProjectsRoute = AdminAdminProjectsRouteImport.update({
   path: '/admin/projects',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminAdminPermissionsRoute = AdminAdminPermissionsRouteImport.update({
-  id: '/admin/permissions',
-  path: '/admin/permissions',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AdminAdminPayrollRoute = AdminAdminPayrollRouteImport.update({
   id: '/admin/payroll',
   path: '/admin/payroll',
@@ -192,7 +186,6 @@ export interface FileRoutesByFullPath {
   '/admin/employees': typeof AdminAdminEmployeesRouteWithChildren
   '/admin/leave': typeof AdminAdminLeaveRoute
   '/admin/payroll': typeof AdminAdminPayrollRouteWithChildren
-  '/admin/permissions': typeof AdminAdminPermissionsRoute
   '/admin/projects': typeof AdminAdminProjectsRouteWithChildren
   '/admin/settings': typeof AdminAdminSettingsRoute
   '/attendance/$date': typeof EmployeeAttendanceDateRoute
@@ -215,7 +208,6 @@ export interface FileRoutesByTo {
   '/projects': typeof EmployeeProjectsRoute
   '/admin/attendance': typeof AdminAdminAttendanceRoute
   '/admin/leave': typeof AdminAdminLeaveRoute
-  '/admin/permissions': typeof AdminAdminPermissionsRoute
   '/admin/settings': typeof AdminAdminSettingsRoute
   '/attendance/$date': typeof EmployeeAttendanceDateRoute
   '/attendance/log': typeof EmployeeAttendanceLogRoute
@@ -245,7 +237,6 @@ export interface FileRoutesById {
   '/_admin/admin/employees': typeof AdminAdminEmployeesRouteWithChildren
   '/_admin/admin/leave': typeof AdminAdminLeaveRoute
   '/_admin/admin/payroll': typeof AdminAdminPayrollRouteWithChildren
-  '/_admin/admin/permissions': typeof AdminAdminPermissionsRoute
   '/_admin/admin/projects': typeof AdminAdminProjectsRouteWithChildren
   '/_admin/admin/settings': typeof AdminAdminSettingsRoute
   '/_employee/attendance/$date': typeof EmployeeAttendanceDateRoute
@@ -274,7 +265,6 @@ export interface FileRouteTypes {
     | '/admin/employees'
     | '/admin/leave'
     | '/admin/payroll'
-    | '/admin/permissions'
     | '/admin/projects'
     | '/admin/settings'
     | '/attendance/$date'
@@ -297,7 +287,6 @@ export interface FileRouteTypes {
     | '/projects'
     | '/admin/attendance'
     | '/admin/leave'
-    | '/admin/permissions'
     | '/admin/settings'
     | '/attendance/$date'
     | '/attendance/log'
@@ -326,7 +315,6 @@ export interface FileRouteTypes {
     | '/_admin/admin/employees'
     | '/_admin/admin/leave'
     | '/_admin/admin/payroll'
-    | '/_admin/admin/permissions'
     | '/_admin/admin/projects'
     | '/_admin/admin/settings'
     | '/_employee/attendance/$date'
@@ -463,13 +451,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminProjectsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/_admin/admin/permissions': {
-      id: '/_admin/admin/permissions'
-      path: '/admin/permissions'
-      fullPath: '/admin/permissions'
-      preLoaderRoute: typeof AdminAdminPermissionsRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/_admin/admin/payroll': {
       id: '/_admin/admin/payroll'
       path: '/admin/payroll'
@@ -594,7 +575,6 @@ interface AdminRouteChildren {
   AdminAdminEmployeesRoute: typeof AdminAdminEmployeesRouteWithChildren
   AdminAdminLeaveRoute: typeof AdminAdminLeaveRoute
   AdminAdminPayrollRoute: typeof AdminAdminPayrollRouteWithChildren
-  AdminAdminPermissionsRoute: typeof AdminAdminPermissionsRoute
   AdminAdminProjectsRoute: typeof AdminAdminProjectsRouteWithChildren
   AdminAdminSettingsRoute: typeof AdminAdminSettingsRoute
   AdminAdminIndexRoute: typeof AdminAdminIndexRoute
@@ -605,7 +585,6 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminAdminEmployeesRoute: AdminAdminEmployeesRouteWithChildren,
   AdminAdminLeaveRoute: AdminAdminLeaveRoute,
   AdminAdminPayrollRoute: AdminAdminPayrollRouteWithChildren,
-  AdminAdminPermissionsRoute: AdminAdminPermissionsRoute,
   AdminAdminProjectsRoute: AdminAdminProjectsRouteWithChildren,
   AdminAdminSettingsRoute: AdminAdminSettingsRoute,
   AdminAdminIndexRoute: AdminAdminIndexRoute,

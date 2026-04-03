@@ -97,12 +97,6 @@ export function AdminSidebar() {
       to: ROUTES.ADMIN_SETTINGS,
       visible: canManageSettings,
     },
-    {
-      label: "Permissions",
-      icon: ShieldCheck,
-      to: ROUTES.ADMIN_PERMISSIONS,
-      visible: isSuperAdmin,
-    },
   ];
 
   const initials = (user?.username ?? "U").charAt(0).toUpperCase();
